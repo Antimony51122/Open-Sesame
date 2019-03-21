@@ -4,36 +4,32 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using UnityEngine; // communication with arduino
 
-public class ArduinoHelper : MonoBehaviour
-{
+public class ArduinoHelper : MonoBehaviour {
     // ------------------------------------------------------
     // Config Params
     // ------------------------------------------------------
 
-    public float angle_l;  // left leg open angle 
-    public float angle_r;  // right leg open angle
+    public float angle_l; // left leg open angle 
+    public float angle_r; // right leg open angle
 
     // ------------------------------------------------------
     // Cached Reference
     // ------------------------------------------------------
 
-    // M0 arduino for right
-    private SerialPort sp = new SerialPort("/dev/cu.usbmodem141201", 9600);
+    // M0 arduino
+    private SerialPort sp = new SerialPort("COM5", 9600);
 
     /////////////////
     /// Main Loop ///
     /////////////////
-
-    void Start()
-    {
+    void Start() {
         // open the event listening of the arduino port
         sp.Open();
         sp.ReadTimeout = 1;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (sp.IsOpen) {
             try {
                 string value = sp.ReadLine();
