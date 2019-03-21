@@ -8,7 +8,7 @@ public class Whale : MonoBehaviour {
     // ------------------------------------------------------
 
     // determine whether the moving down posture of the whale is valid
-    // when the whale is at higher position, moving down is valid while moving up is invalid and vice versa
+    // when at higher position, moving down is valid while moving up is invalid and vice versa
     private bool isMovingDownValid;
 
     // define the 3 states the whale's  postures switches between 
@@ -26,6 +26,7 @@ public class Whale : MonoBehaviour {
     // ------------------------------------------------------
 
     private State state;
+    private State previousState;
 
     /////////////////
     /// Main Loop ///
@@ -36,8 +37,10 @@ public class Whale : MonoBehaviour {
         isMovingDownValid = true;
 
         // initialise the state with stop state where the whale keeps the position
-        state = new State();
-        state = State.stop;
+        state         = new State();
+        state         = State.stop;
+        previousState = new State();
+        previousState = State.stop;
 
         // initialise the whale position translation speed
         speed = 5.0f;
@@ -46,11 +49,20 @@ public class Whale : MonoBehaviour {
     void Update() {
         KeyboardControl();
         MovementHandler();
+
+        //PrintState();
     }
 
     // ------------------------------------------------------
     // Customised Methods
     // ------------------------------------------------------
+
+    private void PrintState() {
+        if (state != previousState) {
+            Debug.Log(state);
+            state = previousState;
+        }
+    }
 
     private void MovementHandler() {
         switch (state) {
@@ -93,7 +105,7 @@ public class Whale : MonoBehaviour {
     private IEnumerator MoveDown() {
         if (isMovingDownValid) {
             state = State.movingDown;
-            yield return new WaitForSeconds(0.75f); // give the whale 0.75s position translation time
+            yield return new WaitForSeconds(0.75f); // give 0.75s position translation time
             state = State.stop;
 
             // banning the whale from moving further downwards when it's already in lower position

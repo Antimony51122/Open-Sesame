@@ -33,7 +33,7 @@ public class DestroyObject : MonoBehaviour {
     // - didn't want gravity to effect my player so I had set to Kinematic instead of Dynamic
     private void OnTriggerEnter2D(Collider2D collision) {
         Destroy(gameObject);
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
     }
 
     // ------------------------------------------------------

@@ -12,6 +12,7 @@ public class Jaw : MonoBehaviour {
     float Angle_l;
     float Angle_r;
     float Angle;
+
     [SerializeField] private float speed = 120f;
 
     // Mouth Open Angle Constraint
@@ -21,8 +22,13 @@ public class Jaw : MonoBehaviour {
 
     private float rotateAngle;
 
+    // ------------------------------------------------------
+    // Cached Reference
+    // ------------------------------------------------------
+
     // M0 arduino for right
     SerialPort sp = new SerialPort ("/dev/cu.usbmodem141201", 9600);
+
 
 
     /////////////////
@@ -38,7 +44,7 @@ public class Jaw : MonoBehaviour {
     }
 
     void Update () {
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
 
         if (sp.IsOpen ) {
             try {

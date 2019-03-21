@@ -8,7 +8,7 @@ public class ScrollBackground : MonoBehaviour {
     // ------------------------------------------------------
 
     [SerializeField] private float   scrollSpeed = -4f;
-    [SerializeField] private Vector2 startPos    = new Vector2(0f, -6.67f);
+    [SerializeField] private Vector2 startPos    = new Vector2(0f, 0f);
     [SerializeField] private int     resetX      = -32;
 
     ///////////////
@@ -16,6 +16,7 @@ public class ScrollBackground : MonoBehaviour {
     ///////////////
 
     void Start() {
+        // override the start position to its initial sprite position
         startPos = transform.position;
     }
 

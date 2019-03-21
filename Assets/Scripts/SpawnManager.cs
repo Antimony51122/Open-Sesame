@@ -50,6 +50,9 @@ public class SpawnManager : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
+    // TODO: trash coming on both altitude, or otherwise the player doesn't need to close mouth anymore
+    // TODO: gradually increase the speed of object moving towards left
+
     private void spawnObject() {
         // instantiate the next spawn
         GameObject newSpawn;

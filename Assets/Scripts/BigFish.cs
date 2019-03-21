@@ -18,9 +18,9 @@ public class BigFish : MonoBehaviour {
     private PlayerHealth playerHealth;
     private Jaw jaw;
 
-    ///////////////
-    // Main Loop //
-    ///////////////
+    /////////////////
+    /// Main Loop ///
+    /////////////////
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();
