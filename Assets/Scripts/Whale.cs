@@ -20,6 +20,9 @@ public class Whale : MonoBehaviour {
         stop
     }
 
+    [SerializeField] private float moveDownAngle;
+    [SerializeField] private float moveUpAngle;
+
     // define the moving up and down speed
     private float speed;
 
@@ -73,7 +76,7 @@ public class Whale : MonoBehaviour {
     private void PrintState() {
         if (state != previousState) {
             Debug.Log(state);
-            state = previousState; // VERY CAREFUL!!!!!
+            state = previousState; // VERY CAREFUL!!!!! This will crash with StartCoroutine 
         }
     }
 

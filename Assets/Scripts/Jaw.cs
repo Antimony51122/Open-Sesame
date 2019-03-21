@@ -38,6 +38,7 @@ public class Jaw : MonoBehaviour {
     }
 
     void Start () {
+        // set the jaw initial rotation angle to 0
         rotateAngle = 0;
     }
 

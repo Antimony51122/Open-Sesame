@@ -12,6 +12,8 @@ public class ArduinoHelper : MonoBehaviour {
     public float angle_l; // left leg open angle 
     public float angle_r; // right leg open angle
 
+    public string path; // the file address the angle data will be written into
+
     // ------------------------------------------------------
     // Cached Reference
     // ------------------------------------------------------
@@ -22,13 +24,16 @@ public class ArduinoHelper : MonoBehaviour {
     /////////////////
     /// Main Loop ///
     /////////////////
+
     void Start() {
         // open the event listening of the arduino port
         sp.Open();
         sp.ReadTimeout = 1;
+
+        // need to re-assign the path variable or otherwise will encounter ArgumentNullException
+        path = "C:/Users/HRK/Documents/DanRoboticsBricks/test.txt";
     }
 
-    // Update is called once per frame
     void Update() {
         if (sp.IsOpen) {
             try {
