@@ -8,8 +8,8 @@ public class CalibrationMenu : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
-    private float angleLeft;
-    private float angleRight;
+    [SerializeField] private float angleLeft;
+    [SerializeField] private float angleRight;
 
     // the 2 angle constraints will be accessed by the Jaw class
     public float angleLeftConstraint;
@@ -22,13 +22,22 @@ public class CalibrationMenu : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
+    public GameObject arduinoGameObject;
+
     private ArduinoHelper arduinoHelper;
+
 
     /////////////////
     /// Main Loop ///
     /////////////////
+
+    void Awake() {
+        arduinoHelper = arduinoGameObject.GetComponent<ArduinoHelper>();
+    }
+
     void Start() {
-        arduinoHelper = new ArduinoHelper();
+        angleLeft = 0;
+        angleRight = 0;
     }
 
     void Update() {

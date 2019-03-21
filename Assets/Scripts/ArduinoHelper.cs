@@ -17,7 +17,7 @@ public class ArduinoHelper : MonoBehaviour {
     // ------------------------------------------------------
 
     // M0 arduino
-    private SerialPort sp = new SerialPort("COM5", 9600);
+    public SerialPort sp = new SerialPort("COM5", 9600);
 
     /////////////////
     /// Main Loop ///
