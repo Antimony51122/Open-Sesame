@@ -21,7 +21,15 @@ public class Whale : MonoBehaviour {
     // define the moving up and down speed
     private float speed;
 
+    // ------------------------------------------------------
+    // Cached Reference
+    // ------------------------------------------------------
+
     private State state;
+
+    /////////////////
+    /// Main Loop ///
+    /////////////////
 
     void Start() {
         // start with higher position where moving down is valid while moving up is invalid
@@ -31,6 +39,7 @@ public class Whale : MonoBehaviour {
         state = new State();
         state = State.stop;
 
+        // initialise the whale position translation speed
         speed = 5.0f;
     }
 
@@ -82,14 +91,25 @@ public class Whale : MonoBehaviour {
     // ----- Change Movements by Manipulating States -----
 
     private IEnumerator MoveDown() {
-        state = State.movingDown;
-        yield return new WaitForSeconds(0.75f);
-        state = State.stop;
+        if (isMovingDownValid) {
+            state = State.movingDown;
+            yield return new WaitForSeconds(0.75f); // give the whale 0.75s position translation time
+            state = State.stop;
+
+            // banning the whale from moving further downwards when it's already in lower position
+            isMovingDownValid = false;
+        }
     }
 
     private IEnumerator MoveUp() {
-        state = State.movingUp;
-        yield return new WaitForSeconds(0.75f);
-        state = State.stop;
+        if (!isMovingDownValid) {
+            state = State.movingUp;
+            yield return new WaitForSeconds(0.75f);
+            state = State.stop;
+
+            // banning the whale from moving further upwards when it's already in higher position
+            isMovingDownValid = true;
+        }
     }
+
 }
