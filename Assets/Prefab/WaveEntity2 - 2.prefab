@@ -284,5 +284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: -1
-  startPos: {x: 0, y: 0}
   resetX: -32
+  isOscillating: 1
+  movementVector: {x: 0, y: 0.01}
+  period: 2
+  movementFactor: 0

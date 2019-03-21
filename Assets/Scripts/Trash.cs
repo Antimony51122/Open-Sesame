@@ -9,9 +9,9 @@ public class Trash : MonoBehaviour {
 
     private PlayerHealth playerHealth;
 
-    ///////////////
-    // Main Loop //
-    ///////////////
+    /////////////////
+    /// Main Loop ///
+    /////////////////
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();

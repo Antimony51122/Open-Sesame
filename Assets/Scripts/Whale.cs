@@ -28,6 +28,8 @@ public class Whale : MonoBehaviour {
     private State state;
     private State previousState;
 
+    private Jaw jaw;
+
     /////////////////
     /// Main Loop ///
     /////////////////
@@ -98,7 +100,8 @@ public class Whale : MonoBehaviour {
 
     // ----- Potentiometer Control -----
 
-    void PotentiometerControl() { }
+    void PotentiometerControl() {
+    }
 
     // ----- Change Movements by Manipulating States -----
 
