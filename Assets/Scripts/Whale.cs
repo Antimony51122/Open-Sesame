@@ -7,6 +7,8 @@ public class Whale : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
+    private float angleAltitude; // whale altitude level controlled by left leg open angle
+
     // determine whether the moving down posture of the whale is valid
     // when at higher position, moving down is valid while moving up is invalid and vice versa
     private bool isMovingDownValid;
@@ -28,11 +30,16 @@ public class Whale : MonoBehaviour {
     private State state;
     private State previousState;
 
-    private Jaw jaw;
+    [SerializeField] private GameObject arduinoGameObjectGame;
+    private ArduinoHelper arduinoHelper;
 
     /////////////////
     /// Main Loop ///
     /////////////////
+
+    void Awake() {
+        arduinoHelper = arduinoGameObjectGame.GetComponent<ArduinoHelper>();
+    }
 
     void Start() {
         // start with higher position where moving down is valid while moving up is invalid
@@ -49,7 +56,11 @@ public class Whale : MonoBehaviour {
     }
 
     void Update() {
+        angleAltitude = arduinoHelper.angle_l;
+        PotentiometerControl(angleAltitude);
+
         KeyboardControl();
+
         MovementHandler();
 
         //PrintState();
@@ -62,7 +73,7 @@ public class Whale : MonoBehaviour {
     private void PrintState() {
         if (state != previousState) {
             Debug.Log(state);
-            state = previousState;
+            state = previousState; // VERY CAREFUL!!!!!
         }
     }
 
@@ -100,7 +111,12 @@ public class Whale : MonoBehaviour {
 
     // ----- Potentiometer Control -----
 
-    void PotentiometerControl() {
+    void PotentiometerControl(float angle) {
+        if (angle > 30f) {
+            StartCoroutine(MoveDown());
+        } else if (angle < 5f) {
+            StartCoroutine(MoveUp());
+        }
     }
 
     // ----- Change Movements by Manipulating States -----

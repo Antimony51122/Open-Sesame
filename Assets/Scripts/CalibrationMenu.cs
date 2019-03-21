@@ -22,7 +22,7 @@ public class CalibrationMenu : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
-    public GameObject arduinoGameObjectCalibration;
+    [SerializeField] private GameObject arduinoGameObjectCalibration;
     private ArduinoHelper arduinoHelper;
 
 

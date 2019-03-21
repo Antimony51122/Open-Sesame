@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f9179a2b64aa34f846fccfaf4f972d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arduinoGameObjectGame: {fileID: 999976739}
 --- !u!4 &394667173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5268841275500160341, guid: 4c27e1d52e23d234ab215e948832956f,
