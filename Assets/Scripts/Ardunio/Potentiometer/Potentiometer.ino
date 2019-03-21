@@ -44,6 +44,7 @@ void loop() {
     }
 
     SerialUSB.println(deltaAngle);
+    //SerialUSB.println(intAngle);
     // doesn't necessarily need write function since Serial.print() and Serial.println() statements send data the same place as Serial.write()
     // SerialUSB.write() might cause weird characters
     //SerialUSB.write(deltaAngle);

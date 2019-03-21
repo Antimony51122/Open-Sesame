@@ -18,13 +18,13 @@ public class SmallFish : MonoBehaviour {
     private PlayerHealth playerHealth;
     private Jaw jaw;
 
-    ///////////////
-    // Main Loop //
-    ///////////////
+    /////////////////
+    /// Main Loop ///
+    /////////////////
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        jaw = FindObjectOfType<Jaw>();
+        jaw          = FindObjectOfType<Jaw>();
     }
 
     void Update() {
@@ -41,12 +41,13 @@ public class SmallFish : MonoBehaviour {
     // ------------------------------------------------------
 
     private void ChangeSprites() {
-        if (transform.position.x > jaw.pivotCoordinate.x &&
+        //Debug.Log(transform.position.x);
+        if (transform.position.x > -7f &&
             transform.position.x < 4f) {
             //Debug.Log(jaw.pivotCoordinate.x);
             // When the fish is close to the jaw but not being eaten yet
             GetComponent<SpriteRenderer>().sprite = smallFishFrightened;
-        } else if (transform.position.x < jaw.pivotCoordinate.x - 1f) {
+        } else if (transform.position.x < -7f) {
             // When the fish passed the Whale, indicating the Whale missed capturing it
             GetComponent<SpriteRenderer>().sprite = smallFishLaugh;
         }

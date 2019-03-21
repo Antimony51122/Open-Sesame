@@ -1,64 +1,66 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
-using System.IO.Ports; // communication with arduino
+using System.IO.Ports;
+using UnityEngine; // communication with arduino
 
 public class Jaw : MonoBehaviour {
     // ------------------------------------------------------
     // Config Params
     // ------------------------------------------------------
 
-    // The point we want to rotate around
-    public Vector3 pivotCoordinate = new Vector3(0f, 0f, -0.5f);
-
+    float Angle_l;
+    float Angle_r;
+    float Angle;
     [SerializeField] private float speed = 120f;
 
     // Mouth Open Angle Constraint
-    [SerializeField] private float closeAngle    = 359f;
-    [SerializeField] private float openMaxAngle  = 290f;
+    [SerializeField] private float closeAngle = 359f;
+    [SerializeField] private float openMaxAngle = 290f;
     [SerializeField] private float startingAngle = 358f;
 
-    // 
-    SerialPort sp = new SerialPort("COM5", 9600);
+    private float rotateAngle;
+
+    // M0 arduino for right
+    SerialPort sp = new SerialPort ("/dev/cu.usbmodem141201", 9600);
+
 
     ///////////////
     // Main Loop //
     ///////////////
 
-    void Start() {
+    void Start () {
+        rotateAngle = 0;
+
         // open the event listening of the arduino port
-        sp.Open();
+        sp.Open ();
         sp.ReadTimeout = 1;
-
-        pivotCoordinate.x = transform.position.x - 1.55f;
-        pivotCoordinate.y = transform.position.y + 0.15f;
-
-        // initially set to starting angle
-        transform.RotateAround(
-            pivotCoordinate,
-            Vector3.forward,
-            startingAngle);
     }
 
-    void Update() {
-        if (sp.IsOpen) {
+    void Update () {
+        if (sp.IsOpen ) {
             try {
-                PotentiometerControl(Int32.Parse(sp.ReadLine()));
-                Debug.Log(Int32.Parse(sp.ReadLine()));
-            }
-            catch (System.Exception) {
+                //intAngle=Int32.Parse (sp.ReadLine ());
+                //intAngle = sp.ReadLine ();
+                //Angle_l = float.Parse(sp_l.ReadLine (), System.Globalization.CultureInfo.InvariantCulture);
+                //Angle_r = float.Parse(sp_r.ReadLine (), System.Globalization.CultureInfo.InvariantCulture);
+                string value = sp.ReadLine();
+                string[] getAngle = value.Split(',');
+                Angle_r = float.Parse(getAngle[0]);
+                Angle_l = float.Parse(getAngle[1]);
+                Angle = Angle_r;
+
+                PotentiometerControl(Angle);
+
+                //Debug.Log (sp_r.ReadLine ());
+                Debug.Log(Angle);
+
+            } catch (System.Exception) {
                 //throw;
             }
         }
 
         KeyboardControl();
-        //Debug.Log(transform.localRotation.eulerAngles);
-
-        //if (transform.localRotation.eulerAngles ). {
-
-        //}
     }
 
     // ------------------------------------------------------
@@ -70,30 +72,17 @@ public class Jaw : MonoBehaviour {
 
     // ----- Keyboard Control -----
 
-    void KeyboardControl() {
-        if (Input.GetKey(KeyCode.A)) {
-            transform.RotateAround(
-                pivotCoordinate,
-                Vector3.forward,
-                speed * Time.deltaTime);
-        } else if (Input.GetKey(KeyCode.D)) {
-            transform.RotateAround(
-                pivotCoordinate,
-                Vector3.forward,
-                -speed * Time.deltaTime);
+    void KeyboardControl () {
+        if (Input.GetKey (KeyCode.A)) {
+            transform.Rotate(Vector3.forward * speed * Time.deltaTime);
+        } else if (Input.GetKey (KeyCode.D)) {
+            transform.Rotate(-Vector3.forward * speed * Time.deltaTime);
         }
     }
 
     // ----- Arduino Potentiometer Control -----
 
-    void PotentiometerControl(int deltaAngle) {
-        // mitigate shift error which is normally between -1 to 1
-        if (Math.Abs(deltaAngle) > 2) {
-            transform.RotateAround(
-                pivotCoordinate,
-                Vector3.forward,
-                -deltaAngle * 20 * Time.deltaTime);
-            // 20 hahaha, just manual control factor
-        }
+    void PotentiometerControl (float angle) {
+        transform.localRotation = Quaternion.Euler(0, 0, -angle);
     }
 }
