@@ -22,8 +22,7 @@ public class CalibrationMenu : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
-    public GameObject arduinoGameObject;
-
+    public GameObject arduinoGameObjectCalibration;
     private ArduinoHelper arduinoHelper;
 
 
@@ -32,7 +31,7 @@ public class CalibrationMenu : MonoBehaviour {
     /////////////////
 
     void Awake() {
-        arduinoHelper = arduinoGameObject.GetComponent<ArduinoHelper>();
+        arduinoHelper = arduinoGameObjectCalibration.GetComponent<ArduinoHelper>();
     }
 
     void Start() {

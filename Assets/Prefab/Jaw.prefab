@@ -119,6 +119,7 @@ MonoBehaviour:
   closeAngle: 359
   openMaxAngle: 290
   startingAngle: 358
+  arduinoGameObjectGame: {fileID: 0}
 --- !u!61 &6005143254751844624
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,7 +133,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.9686, y: 0.09405044}
+  m_Offset: {x: 2.4048524, y: 0.09405044}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0.5}
@@ -143,5 +144,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.9372, y: 0.4133163}
+  m_Size: {x: 4.809705, y: 0.4133163}
   m_EdgeRadius: 0

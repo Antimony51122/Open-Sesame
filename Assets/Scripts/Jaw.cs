@@ -26,15 +26,18 @@ public class Jaw : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
+    public GameObject arduinoGameObjectGame;
     private ArduinoHelper arduinoHelper;
 
     /////////////////
     /// Main Loop ///
     /////////////////
 
-    void Start () {
-        arduinoHelper = new ArduinoHelper();
+    void Awake() {
+        arduinoHelper = arduinoGameObjectGame.GetComponent<ArduinoHelper>();
+    }
 
+    void Start () {
         rotateAngle = 0;
     }
 
@@ -43,7 +46,7 @@ public class Jaw : MonoBehaviour {
 
         angleJaw = arduinoHelper.angle_r;
 
-        //PotentiometerControl(angleJaw);
+        PotentiometerControl(angleJaw);
 
         KeyboardControl();
     }
