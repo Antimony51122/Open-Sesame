@@ -31,13 +31,8 @@ public class PlayerHealth : MonoBehaviour {
 
         // under 30% health, start warning
         if (health < healthWarn) {
-            SetColour(Color.red);
+            //SetColour(Color.red);
 
-            //if ((health * 100f) / 3 == 0) {
-            //    SetColour(Color.white);
-            //} else {
-            //    SetColour(Color.red);
-            //}
         } else if (health > healthMax) {
             health = healthMax;
         }

@@ -112,7 +112,7 @@ public class Whale : MonoBehaviour {
     // ----- Potentiometer Control -----
 
     void PotentiometerControl(float angle) {
-        if (angle > 30f) {
+        if (angle > 20f) {
             StartCoroutine(MoveDown());
         } else if (angle < 5f) {
             StartCoroutine(MoveUp());

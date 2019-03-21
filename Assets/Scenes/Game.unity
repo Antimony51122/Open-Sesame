@@ -162,7 +162,7 @@ MonoBehaviour:
   spawnInterval: 2
   spawnPosHigher: {x: 18, y: -2.7, z: -4}
   spawnPosLower: {x: 18, y: -6.5, z: -4}
-  speed: -10
+  speed: -6
 --- !u!1 &146042347
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,21 +1376,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240729887693131211, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.5912863
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240729887693131211, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240729887693131211, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.504717
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05, type: 3}
