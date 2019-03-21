@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using UnityEngine; // communication with arduino
 
+// TODO: only eat when mouth is opened
+
 public class Jaw : MonoBehaviour {
     // ------------------------------------------------------
     // Config Params
     // ------------------------------------------------------
 
-    public  float angle_l;  // left leg open angle 
-    public  float angle_r;  // right leg open angle
     private float angleJaw; // whale jaw open angle
 
     [SerializeField] private float speed = 120f;
@@ -26,45 +26,24 @@ public class Jaw : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
-    // M0 arduino for right
-    private SerialPort sp = new SerialPort("/dev/cu.usbmodem141201", 9600);
+    private ArduinoHelper arduinoHelper;
 
     /////////////////
     /// Main Loop ///
     /////////////////
 
     void Start () {
-        rotateAngle = 0;
+        arduinoHelper = new ArduinoHelper();
 
-        // open the event listening of the arduino port
-        sp.Open ();
-        sp.ReadTimeout = 1;
+        rotateAngle = 0;
     }
 
     void Update () {
         //Debug.Log(transform.position);
 
-        if (sp.IsOpen ) {
-            try {
-                //intAngle=Int32.Parse (sp.ReadLine ());
-                //intAngle = sp.ReadLine ();
-                //angle_l = float.Parse(sp_l.ReadLine (), System.Globalization.CultureInfo.InvariantCulture);
-                //angle_r = float.Parse(sp_r.ReadLine (), System.Globalization.CultureInfo.InvariantCulture);
-                string value = sp.ReadLine();
-                string[] getAngle = value.Split(',');
-                angle_r = float.Parse(getAngle[0]);
-                angle_l = float.Parse(getAngle[1]);
-                angleJaw = angle_r;
+        angleJaw = arduinoHelper.angle_r;
 
-                PotentiometerControl(angleJaw);
-
-                //Debug.Log (sp_r.ReadLine ());
-                Debug.Log(angleJaw);
-
-            } catch (System.Exception) {
-                //throw;
-            }
-        }
+        //PotentiometerControl(angleJaw);
 
         KeyboardControl();
     }
