@@ -25,9 +25,9 @@ public class Jaw : MonoBehaviour {
     SerialPort sp = new SerialPort ("/dev/cu.usbmodem141201", 9600);
 
 
-    ///////////////
-    // Main Loop //
-    ///////////////
+    /////////////////
+    /// Main Loop ///
+    /////////////////
 
     void Start () {
         rotateAngle = 0;
@@ -38,6 +38,8 @@ public class Jaw : MonoBehaviour {
     }
 
     void Update () {
+        Debug.Log(transform.position);
+
         if (sp.IsOpen ) {
             try {
                 //intAngle=Int32.Parse (sp.ReadLine ());

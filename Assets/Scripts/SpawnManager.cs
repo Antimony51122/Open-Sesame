@@ -14,9 +14,14 @@ public class SpawnManager : MonoBehaviour {
     [SerializeField] private GameObject bigFish;
     [SerializeField] private GameObject trash;
 
-    [SerializeField] private float   spawnInterval = 2f;
-    [SerializeField] private Vector3 spawnPos      = new Vector3(0f, 0f, 0f);
-    [SerializeField] private float   speed         = -10f;
+    [SerializeField] private float   spawnInterval  = 2f;
+    [SerializeField] private Vector3 spawnPosHigher = new Vector3(0f, 0f, 0f);
+    [SerializeField] private Vector3 spawnPosLower  = new Vector3(0f, 0f, 0f);
+    [SerializeField] private float   speed          = -10f;
+
+    // initialise an unassigned final spawn position to select from one of the higher or lower
+    private Vector3 spawnPos;
+
 
     ///////////////
     // Main Loop //
@@ -50,22 +55,32 @@ public class SpawnManager : MonoBehaviour {
         GameObject newSpawn;
 
         // random 1/3 possibility spawning each of the 3 plausible objects
+        // random 1/2 possibility spawning at each of the 2 plausible altitude
         Random random = new Random();
-        int randomThreshold = random.Next(1, 4); // generate a integer number between 1, 2, 3
+        int randomThresholdObject = random.Next(1, 4); // generate a integer number between 1, 2, 3
+        int randomThresholdPos    = random.Next(1, 3); // generate a integer number between 1, 2
 
-        if (randomThreshold == 1) {
+        // determine the altitude of the object spawn position, assigning values to spawnPos
+        if (randomThresholdPos == 1) {
+            spawnPos = spawnPosHigher;
+        } else if (randomThresholdPos == 2) {
+            spawnPos = spawnPosLower;
+        }
+
+        // determine which object will be spawned at the previous defined altitude
+        if (randomThresholdObject == 1) {
             newSpawn = Instantiate(
                 smallFish,
                 spawnPos,
                 Quaternion.identity);
             addChildToCurrentObject(newSpawn);
-        } else if (randomThreshold == 2) {
+        } else if (randomThresholdObject == 2) {
             newSpawn = Instantiate(
                 bigFish,
                 spawnPos,
                 Quaternion.identity);
             addChildToCurrentObject(newSpawn);
-        } else if (randomThreshold == 3) {
+        } else if (randomThresholdObject == 3) {
             newSpawn = Instantiate(
                 trash,
                 spawnPos,

@@ -160,7 +160,8 @@ MonoBehaviour:
   bigFish: {fileID: 6435206746549123380, guid: 2e2b431be17fbf84ea8f79d5112cc146, type: 3}
   trash: {fileID: 6693227553873380884, guid: 4966e172d7326894ca7e8ba1f24622cd, type: 3}
   spawnInterval: 2
-  spawnPos: {x: 18, y: -3, z: -1}
+  spawnPosHigher: {x: 18, y: -2.2, z: -4}
+  spawnPosLower: {x: 18, y: -6, z: -4}
   speed: -10
 --- !u!1 &277998086
 GameObject:

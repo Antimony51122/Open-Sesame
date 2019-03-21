@@ -40,6 +40,8 @@ public class SmallFish : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
+    // TODO: not show rage faces if the whale is in different altitude
+
     private void ChangeSprites() {
         //Debug.Log(transform.position.x);
         if (transform.position.x > -7f &&
