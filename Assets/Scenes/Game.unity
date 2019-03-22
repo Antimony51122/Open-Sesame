@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 276184611}
   - component: {fileID: 276184610}
   - component: {fileID: 276184609}
-  - component: {fileID: 276184612}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -319,24 +318,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &276184612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276184608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eac115d58778c64e89b230f822e62ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 2045725422}
-  health: 1
-  healthMax: 1
-  healthMin: 0
-  healthWarn: 0.3
-  healthDecreaseRate: 0.001
 --- !u!1 &277998086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,12 +1828,12 @@ PrefabInstance:
     - target: {fileID: 1240729887065923150, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.25
+      value: -9.32
       objectReference: {fileID: 0}
     - target: {fileID: 1240729887065923150, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.94
+      value: 7.35
       objectReference: {fileID: 0}
     - target: {fileID: 1240729887065923150, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
         type: 3}
@@ -1898,6 +1879,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143526346, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05, type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 2045725422}
+    - target: {fileID: 1240729887693131220, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.8900003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240729887642896272, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.89
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05, type: 3}
