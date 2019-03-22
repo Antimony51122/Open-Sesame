@@ -39,13 +39,15 @@ public class SpawnSeaGullManager : MonoBehaviour {
 
         // this array exists to avoid error occuring at the beginning when the spawn seagull manager has no children entity
         if (seaGullChildren.Length > 0) {
-            GameObject seaGullInstance = transform.GetChild(0).gameObject;
+            for (int i = 0; i < seaGullChildren.Length; i++) {
+                var seaGullGhild = seaGullChildren[i];
 
-            // only fly towards left when the seagull has not been hit by the water flush
-            if (!seaGull.hitByFlush) {
-                seaGullInstance.transform.Translate(
-                    Vector2.right * displacementSeaGull,
-                    Space.World);
+                // only fly towards left when the seagull has not been hit by the water flush
+                if (!seaGull.hitByFlush) {
+                    seaGullGhild.transform.Translate(
+                        Vector2.right * displacementSeaGull,
+                        Space.World);
+                }
             }
         }
     }

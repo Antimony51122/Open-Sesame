@@ -32,22 +32,30 @@ public class SeaGull : MonoBehaviour
 
     void Update()
     {
-        
+        DestroySeaGullHierarchy();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-
+        Debug.Log(collision.name);
+        if (collision.name == "Splash") {
+            HitByFlush();
+        }
+        Debug.Log(hitByFlush);
     }
 
     // ------------------------------------------------------
     // Customised Methods
     // ------------------------------------------------------
 
-    private void ChangeSprites() {
+    private void HitByFlush() {
         // set the property of hitByFlush to true to stop the entity from moving towards left
         hitByFlush = true;
+    }
 
-
-
+    public void DestroySeaGullHierarchy() {
+        //Debug.Log(gameObject.transform.position.x);
+        if (gameObject.transform.position.x < -18f) {
+            Destroy(gameObject);
+        }
     }
 }

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class SplashManager : MonoBehaviour {
     // ------------------------------------------------------
+    // Config Params
+    // ------------------------------------------------------
+
+    [SerializeField] private float splashDuration = 0.5f;
+
+    // ------------------------------------------------------
     // Cached Reference
     // ------------------------------------------------------
 
@@ -20,7 +26,7 @@ public class SplashManager : MonoBehaviour {
 
         // initially disable the box collider, animator and sprite render and trigger later 
         box2D         = GetComponent<BoxCollider2D>();
-        box2D.enabled = false;
+//        box2D.enabled = false;
 
         animator         = GetComponent<Animator>();
         animator.enabled = false;
@@ -30,7 +36,7 @@ public class SplashManager : MonoBehaviour {
     }
 
     void Update() {
-        Debug.Log(whale.isMovingDownValid); // determine whether the whale is at higher position
+        //Debug.Log(whale.isMovingDownValid); // determine whether the whale is at higher position
 
         if (whale.isActiveAndEnabled) {
             KeyboardControlSplash();
@@ -61,7 +67,7 @@ public class SplashManager : MonoBehaviour {
         box2D.enabled = true;
         animator.enabled = true;
         spriteRenderer.enabled = true;
-        Invoke("DeactivateSplash", 0.3f);
+        Invoke("DeactivateSplash", splashDuration);
     }
 
     void DeactivateSplash() {
