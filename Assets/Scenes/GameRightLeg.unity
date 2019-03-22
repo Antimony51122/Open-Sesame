@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90899e0b2a895184086fe9f8959d8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBothLegMode: 1
+  isBothLegMode: 0
   smallFish: {fileID: 5268841275500160343, guid: 4c27e1d52e23d234ab215e948832956f,
     type: 3}
   bigFish: {fileID: 6435206746549123380, guid: 2e2b431be17fbf84ea8f79d5112cc146, type: 3}
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f9179a2b64aa34f846fccfaf4f972d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftThreshold: 25
+  leftThreshold: 89
   isMovingDownValid: 0
   moveDownAngle: 0
   moveUpAngle: 0
@@ -1506,6 +1506,16 @@ PrefabInstance:
       propertyPath: sceneLoaderGameObject
       value: 
       objectReference: {fileID: 764199863}
+    - target: {fileID: 1240729887693131220, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.8900003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240729887642896272, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.89
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efd1cd4dc88e6ce43aa3f4fc7dc8ac05, type: 3}
 --- !u!1001 &1259710735987327765

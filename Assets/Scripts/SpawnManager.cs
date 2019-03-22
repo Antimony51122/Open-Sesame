@@ -10,6 +10,8 @@ public class SpawnManager : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
+    [SerializeField] private bool isBothLegMode;
+
     [SerializeField] private GameObject smallFish;
     [SerializeField] private GameObject bigFish;
     [SerializeField] private GameObject trash;
@@ -65,11 +67,16 @@ public class SpawnManager : MonoBehaviour {
         int randomThresholdPos    = random.Next(1, 3); // generate a integer number between 1, 2
 
         // determine the altitude of the object spawn position, assigning values to spawnPos
-        if (randomThresholdPos == 1) {
+        if (isBothLegMode) {
+            if (randomThresholdPos == 1) {
+                spawnPos = spawnPosHigher;
+            } else if (randomThresholdPos == 2) {
+                spawnPos = spawnPosLower;
+            }
+        } else {
             spawnPos = spawnPosHigher;
-        } else if (randomThresholdPos == 2) {
-            spawnPos = spawnPosLower;
         }
+        
 
         // determine which object will be spawned at the previous defined altitude
         if (randomThresholdObject == 1) {
@@ -98,4 +105,5 @@ public class SpawnManager : MonoBehaviour {
         item.transform.parent = transform;
     }
     
+
 }

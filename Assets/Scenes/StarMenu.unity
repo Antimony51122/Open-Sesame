@@ -1060,7 +1060,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1812426721}
-        m_MethodName: LoadGameScene
+        m_MethodName: LoadGameBothScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1280,7 +1280,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1812426721}
-        m_MethodName: LoadGameScene
+        m_MethodName: LoadGameRightScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1451,6 +1451,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1812426721}
+    - target: {fileID: 7016364361699499106, guid: db70001267dbec745aead9df372b4198,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadGameLeftScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7016364360830393333, guid: db70001267dbec745aead9df372b4198,
         type: 3}
       propertyPath: m_havePropertiesChanged

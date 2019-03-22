@@ -56,7 +56,8 @@ public class CalibrationMenu : MonoBehaviour {
 
         KeyboardNoteConstraints();
 
-        writeTextHelper.WriteString(angleLeft.ToString(), angleRight.ToString());
+        //writeTextHelper.WriteString(angleLeft.ToString(), angleRight.ToString());
+        Debug.Log(angleRightConstraint);
     }
 
     // ------------------------------------------------------

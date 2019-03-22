@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 104dfde69938d984aa846e4afaae0b22
   - enabled: 1
+    path: Assets/Scenes/GameLeftLeg.unity
+    guid: 59cd00597a4efd742acbb9293eaf4587
+  - enabled: 1
+    path: Assets/Scenes/GameRightLeg.unity
+    guid: dbbac8f51389fa34790177a2dba2a0b0
+  - enabled: 1
     path: Assets/Scenes/Reload.unity
     guid: 03b76f9aa19f3e444899e5f428cf101d
   m_configObjects: {}

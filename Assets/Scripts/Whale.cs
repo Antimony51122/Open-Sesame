@@ -7,6 +7,8 @@ public class Whale : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
+    [SerializeField] private float leftThreshold;
+
     private float angleAltitude; // whale altitude level controlled by left leg open angle
 
     // determine whether the moving down posture of the whale is valid
@@ -116,7 +118,7 @@ public class Whale : MonoBehaviour {
     // ----- Potentiometer Control -----
 
     void PotentiometerControl(float angle) {
-        if (angle > 60f) {
+        if (angle > leftThreshold) {
             StartCoroutine(MoveDown());
         } else if (angle < 5f) {
             StartCoroutine(MoveUp());
