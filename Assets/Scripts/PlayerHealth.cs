@@ -20,6 +20,13 @@ public class PlayerHealth : MonoBehaviour {
     private Transform barMask;
     private Transform bar;
 
+    // ------------------------------------------------------
+    // Cached Reference
+    // ------------------------------------------------------
+
+    [SerializeField] private GameObject sceneLoaderGameObject;
+    private SceneLoader sceneLoader;
+
 
     /////////////////
     /// Main Loop ///
@@ -28,6 +35,8 @@ public class PlayerHealth : MonoBehaviour {
     void Awake() {
         barMask = transform.Find("Green Bar Mask");
         bar     = transform.Find("Green Bar");
+
+        sceneLoader = sceneLoaderGameObject.GetComponent<SceneLoader>();
     }
 
     void Start() {
@@ -44,11 +53,11 @@ public class PlayerHealth : MonoBehaviour {
         SetSize(health);
 
         // under 30% health, start warning
-        if (health < healthWarn) {
-            //SetColour(Color.red);
-
-        } else if (health > healthMax) {
+        if (health > healthMax) {
             health = healthMax;
+        } else if (health <= healthMin) {
+            // player dead, load game over scene to reload
+            sceneLoader.LoadReloadScene();
         }
     }
 
