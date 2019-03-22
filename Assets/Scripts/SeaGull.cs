@@ -11,34 +11,26 @@ public class SeaGull : MonoBehaviour {
     // determine whether the seagull has been hit by water flush or not
     // set public to be accessed by the seagull manager class to deal with collision issues
     public bool hitByFlush;
+    public bool fallIntoWater;
 
     // ------------------------------------------------------
     // Cached Reference
     // ------------------------------------------------------
 
-    [SerializeField] private GameObject seaGullManagerGameObject;
-    private SpawnSeaGullManager spawnSeaGullManager;
-
     private Rigidbody2D rigidbody2D;
-    private Sprite currentSprite;
-    private Animator animator;
+    private Animator    animator;
 
     void Start() {
-        //
         rigidbody2D = GetComponent<Rigidbody2D>();
-        //
-        currentSprite = GetComponent<SpriteRenderer>().sprite;
-        //
-        animator = GetComponent<Animator>();
+        animator    = GetComponent<Animator>();
 
-        // create reference to the 
-        spawnSeaGullManager = seaGullManagerGameObject.GetComponent<SpawnSeaGullManager>();
-
-        // initialise the seagull with state not being hit by the flush
-        hitByFlush = false;
+        // initialise the seagull with state not being hit by the flush, nor fallen into water
+        hitByFlush    = false;
+        fallIntoWater = false;
     }
 
     void Update() {
+        FlowWithWater();
         DestroySeaGullHierarchy();
     }
 
@@ -67,6 +59,13 @@ public class SeaGull : MonoBehaviour {
     private void ChangeRigidBodyType() {
         // change to rigidbody type to dynamics thus could use gravity
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    private void FlowWithWater() {
+        if (transform.position.y < 0.5f) {
+            rigidbody2D.gravityScale = 0;
+            rigidbody2D.velocity = new Vector3(-1.5f, 0, 0);
+        }
     }
 
     // ------- Destroy the instance when it's outside screen to save memory -------

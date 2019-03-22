@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9762fad87210eae4ea1d7133bdefdbea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPosSeaGull: {x: 18, y: 5, z: -1.5}
+  spawnPosSeaGull: {x: 18, y: 5, z: 0.5}
   speedSeaGull: -12.5
   spawnSeaGullInterval: 8
   seaGullGameObject: {fileID: 278755513}
@@ -1915,6 +1915,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.59617853
+      objectReference: {fileID: 0}
+    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
+      propertyPath: m_Size.x
+      value: 0.4364729
+      objectReference: {fileID: 0}
+    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.17571211
+      objectReference: {fileID: 0}
+    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
+      propertyPath: m_Size.y
+      value: 3.5419846
+      objectReference: {fileID: 0}
     - target: {fileID: 5875457902367334157, guid: 7b6ac71479a5f724d8c7d09ca30191c4,
         type: 3}
       propertyPath: whaleGameObject
@@ -2090,12 +2106,12 @@ PrefabInstance:
     - target: {fileID: 8994020789085006039, guid: b66065ed23d2353488b9dec605742a47,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.42
+      value: 18.47
       objectReference: {fileID: 0}
     - target: {fileID: 8994020789085006039, guid: b66065ed23d2353488b9dec605742a47,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.11
+      value: 11.14
       objectReference: {fileID: 0}
     - target: {fileID: 8994020789085006039, guid: b66065ed23d2353488b9dec605742a47,
         type: 3}
