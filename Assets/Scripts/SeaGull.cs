@@ -20,9 +20,13 @@ public class SeaGull : MonoBehaviour {
     private Rigidbody2D rigidbody2D;
     private Animator    animator;
 
+    private PlayerHealth playerHealth;
+
     void Start() {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator    = GetComponent<Animator>();
+
+        playerHealth = FindObjectOfType<PlayerHealth>();
 
         // initialise the seagull with state not being hit by the flush, nor fallen into water
         hitByFlush    = false;
@@ -37,6 +41,7 @@ public class SeaGull : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.name == "Splash") {
             HitByFlush();
+            playerHealth.SplashSeaGull();
         }
     }
 

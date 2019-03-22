@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour {
@@ -8,6 +9,7 @@ public class PlayerHealth : MonoBehaviour {
     // ------------------------------------------------------
 
     private int score;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     [SerializeField] private float health             = 1f;
     [SerializeField] private float healthMax          = 1f;
@@ -31,9 +33,13 @@ public class PlayerHealth : MonoBehaviour {
     void Start() {
         // initialise the player score with 0
         score = 0;
+
+        scoreText.text = score.ToString();
     }
 
     void Update() {
+        scoreText.text = score.ToString();
+
         ConstantHealthDecrease();
         SetSize(health);
 
@@ -82,5 +88,11 @@ public class PlayerHealth : MonoBehaviour {
 
     public void EatTrash() {
         health -= 0.6f;
+    }
+
+    // ----- Splash SeaGull -----
+
+    public void SplashSeaGull() {
+        score += 60;
     }
 }
