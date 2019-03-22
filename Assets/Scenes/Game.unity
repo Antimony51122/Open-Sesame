@@ -2087,11 +2087,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeaGull
       objectReference: {fileID: 0}
-    - target: {fileID: 8994020789085006034, guid: b66065ed23d2353488b9dec605742a47,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8994020789085006039, guid: b66065ed23d2353488b9dec605742a47,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2152,21 +2147,5 @@ PrefabInstance:
       propertyPath: seaGullManagerGameObject
       value: 
       objectReference: {fileID: 1085583331}
-    - target: {fileID: 278755515, guid: b66065ed23d2353488b9dec605742a47, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.949934
-      objectReference: {fileID: 0}
-    - target: {fileID: 278755515, guid: b66065ed23d2353488b9dec605742a47, type: 3}
-      propertyPath: m_Size.y
-      value: 1.4060936
-      objectReference: {fileID: 0}
-    - target: {fileID: 278755515, guid: b66065ed23d2353488b9dec605742a47, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.10269642
-      objectReference: {fileID: 0}
-    - target: {fileID: 278755515, guid: b66065ed23d2353488b9dec605742a47, type: 3}
-      propertyPath: m_Size.x
-      value: 3.203268
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b66065ed23d2353488b9dec605742a47, type: 3}

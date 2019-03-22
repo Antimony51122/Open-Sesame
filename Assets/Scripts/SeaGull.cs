@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeaGull : MonoBehaviour
-{
+public class SeaGull : MonoBehaviour {
     // ------------------------------------------------------
     // Config Params
     // ------------------------------------------------------
 
-    [SerializeField] private Sprite seaGullChildShocked;
 
     // determine whether the seagull has been hit by water flush or not
     // set public to be accessed by the seagull manager class to deal with collision issues
@@ -21,8 +19,18 @@ public class SeaGull : MonoBehaviour
     [SerializeField] private GameObject seaGullManagerGameObject;
     private SpawnSeaGullManager spawnSeaGullManager;
 
-    void Start()
-    {
+    private Rigidbody2D rigidbody2D;
+    private Sprite currentSprite;
+    private Animator animator;
+
+    void Start() {
+        //
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        //
+        currentSprite = GetComponent<SpriteRenderer>().sprite;
+        //
+        animator = GetComponent<Animator>();
+
         // create reference to the 
         spawnSeaGullManager = seaGullManagerGameObject.GetComponent<SpawnSeaGullManager>();
 
@@ -30,17 +38,14 @@ public class SeaGull : MonoBehaviour
         hitByFlush = false;
     }
 
-    void Update()
-    {
+    void Update() {
         DestroySeaGullHierarchy();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        Debug.Log(collision.name);
         if (collision.name == "Splash") {
             HitByFlush();
         }
-        Debug.Log(hitByFlush);
     }
 
     // ------------------------------------------------------
@@ -50,7 +55,21 @@ public class SeaGull : MonoBehaviour
     private void HitByFlush() {
         // set the property of hitByFlush to true to stop the entity from moving towards left
         hitByFlush = true;
+
+        ChangeAnimation();
+        ChangeRigidBodyType();
     }
+
+    private void ChangeAnimation() {
+        animator.SetBool("IsHitByFlush", true);
+    }
+
+    private void ChangeRigidBodyType() {
+        // change to rigidbody type to dynamics thus could use gravity
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    // ------- Destroy the instance when it's outside screen to save memory -------
 
     public void DestroySeaGullHierarchy() {
         //Debug.Log(gameObject.transform.position.x);

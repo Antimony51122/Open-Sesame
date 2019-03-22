@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8994020789085006039
 Transform:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.10269642, y: -0.949934}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -126,7 +126,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.311111, y: 7.311111}
+  m_Size: {x: 3.203268, y: 1.4060936}
   m_EdgeRadius: 0
 --- !u!50 &278755514
 Rigidbody2D:
@@ -161,7 +161,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c33bcbf6e72cf4542b326e2476d09282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seaGullChildShocked: {fileID: 21300000, guid: ae6fdc3b2484ccd4f8b41ab9e90b391f,
-    type: 3}
   hitByFlush: 0
   seaGullManagerGameObject: {fileID: 0}
