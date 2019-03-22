@@ -42,8 +42,11 @@ public class SpawnSeaGullManager : MonoBehaviour {
             for (int i = 0; i < seaGullChildren.Length; i++) {
                 var seaGullGhild = seaGullChildren[i];
 
+                // check the whether hit by flush property of seagull child instance
+                bool seaGullChildHitByFlush = seaGullGhild.GetComponent<SeaGull>().hitByFlush;
+
                 // only fly towards left when the seagull has not been hit by the water flush
-                if (!seaGull.hitByFlush) {
+                if (!seaGullChildHitByFlush) {
                     seaGullGhild.transform.Translate(
                         Vector2.right * displacementSeaGull,
                         Space.World);
