@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +13,11 @@ public class CalibrationMenu : MonoBehaviour {
     [SerializeField] private float angleRight;
 
     // the 2 angle constraints will be accessed by the Jaw class
-    public float angleLeftConstraint;
-    public float angleRightConstraint;
+    public float angleLeftConstraint  = 30f;
+    public float angleRightConstraint = 50f;
 
-    [SerializeField] private Text angleLeftText;
-    [SerializeField] private Text angleRightText;
+    [SerializeField] private TextMeshProUGUI angleLeftText;
+    [SerializeField] private TextMeshProUGUI angleRightText;
 
     // ------------------------------------------------------
     // Cached Reference
@@ -25,6 +26,7 @@ public class CalibrationMenu : MonoBehaviour {
     [SerializeField] private GameObject arduinoGameObjectCalibration;
     private ArduinoHelper arduinoHelper;
 
+    private WriteTextHelper writeTextHelper;
 
     /////////////////
     /// Main Loop ///
@@ -32,6 +34,8 @@ public class CalibrationMenu : MonoBehaviour {
 
     void Awake() {
         arduinoHelper = arduinoGameObjectCalibration.GetComponent<ArduinoHelper>();
+
+        writeTextHelper = new WriteTextHelper();
     }
 
     void Start() {
@@ -49,21 +53,30 @@ public class CalibrationMenu : MonoBehaviour {
         // set the angle constraints of two legs
         NoteLeftConstraint();
         NoteRightConstraint();
+
+        KeyboardNoteConstraints();
+
+        writeTextHelper.WriteString(angleLeft.ToString(), angleRight.ToString());
     }
 
     // ------------------------------------------------------
     // Customised Methods
     // ------------------------------------------------------
 
-    void NoteLeftConstraint() {
+    // ------- Keyboard Control -------
+    private void KeyboardNoteConstraints() {
         if (Input.GetKeyDown(KeyCode.O)) {
-            angleLeftConstraint = angleLeft;
+            NoteLeftConstraint();
+        } else if (Input.GetKeyDown(KeyCode.P)) {
+            NoteRightConstraint();
         }
     }
 
-    void NoteRightConstraint() {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            angleRightConstraint = angleRight;
-        }
+    public void NoteLeftConstraint() {
+        angleLeftConstraint = angleLeft;
+    }
+
+    public void NoteRightConstraint() {
+        angleRightConstraint = angleRight;
     }
 }

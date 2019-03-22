@@ -20,6 +20,8 @@ public class ArduinoHelper : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
+    private WriteTextHelper writeTextHelper;
+
     // M0 arduino
     public SerialPort sp = new SerialPort("COM5", 9600);
 
@@ -28,12 +30,14 @@ public class ArduinoHelper : MonoBehaviour {
     /////////////////
 
     void Start() {
+        writeTextHelper = new WriteTextHelper();
+
         // open the event listening of the arduino port
         sp.Open();
         sp.ReadTimeout = 1;
 
         // need to re-assign the path variable or otherwise will encounter ArgumentNullException
-        path = "C:/Users/HRK/Documents/DanRoboticsBricks/test.txt";
+        path = "C:/Users/HRK/Desktop/Angle/test.txt";
     }
 
     void Update() {
@@ -44,7 +48,8 @@ public class ArduinoHelper : MonoBehaviour {
                 angle_r   = float.Parse(getValue[0]);
                 angle_l   = float.Parse(getValue[1]);
                 buttonNum = int.Parse(getValue[2]);
-                Debug.Log(buttonNum);
+                //Debug.Log(buttonNum);
+                writeTextHelper.WriteString(getValue[0], getValue[1]);
             } catch (System.Exception) {
                 //throw;
             }
