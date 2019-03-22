@@ -297,6 +297,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8994020788809928811}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &278755516 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8994020789085006039, guid: b66065ed23d2353488b9dec605742a47,
+    type: 3}
+  m_PrefabInstance: {fileID: 8994020788809928811}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &394667173 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5268841275500160341, guid: 4c27e1d52e23d234ab215e948832956f,
@@ -679,6 +685,7 @@ Transform:
   - {fileID: 394667173}
   - {fileID: 1142348311}
   - {fileID: 1447846832}
+  - {fileID: 278755516}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -773,7 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9762fad87210eae4ea1d7133bdefdbea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPosSeaGull: {x: 18, y: 5, z: 0.5}
+  spawnPosSeaGull: {x: 18, y: 5, z: -1.5}
   speedSeaGull: -12.5
   spawnSeaGullInterval: 8
   seaGullGameObject: {fileID: 278755513}
@@ -1449,12 +1456,12 @@ PrefabInstance:
     - target: {fileID: 58823308695994393, guid: 2e2b431be17fbf84ea8f79d5112cc146,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.79
+      value: 20.48
       objectReference: {fileID: 0}
     - target: {fileID: 58823308695994393, guid: 2e2b431be17fbf84ea8f79d5112cc146,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.0999994
+      value: -9.98
       objectReference: {fileID: 0}
     - target: {fileID: 58823308695994393, guid: 2e2b431be17fbf84ea8f79d5112cc146,
         type: 3}
@@ -1656,12 +1663,12 @@ PrefabInstance:
     - target: {fileID: 2493097539251230193, guid: 4966e172d7326894ca7e8ba1f24622cd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.080001
+      value: 24.77
       objectReference: {fileID: 0}
     - target: {fileID: 2493097539251230193, guid: 4966e172d7326894ca7e8ba1f24622cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.1299996
+      value: -10.01
       objectReference: {fileID: 0}
     - target: {fileID: 2493097539251230193, guid: 4966e172d7326894ca7e8ba1f24622cd,
         type: 3}
@@ -1794,12 +1801,12 @@ PrefabInstance:
     - target: {fileID: 5268841275500160341, guid: 4c27e1d52e23d234ab215e948832956f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.87
+      value: 27.56
       objectReference: {fileID: 0}
     - target: {fileID: 5268841275500160341, guid: 4c27e1d52e23d234ab215e948832956f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.3
+      value: -10.18
       objectReference: {fileID: 0}
     - target: {fileID: 5268841275500160341, guid: 4c27e1d52e23d234ab215e948832956f,
         type: 3}
@@ -1914,22 +1921,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.59617853
-      objectReference: {fileID: 0}
-    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
-      propertyPath: m_Size.x
-      value: 0.4364729
-      objectReference: {fileID: 0}
-    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.17571211
-      objectReference: {fileID: 0}
-    - target: {fileID: 887866656, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
-      propertyPath: m_Size.y
-      value: 3.5419846
       objectReference: {fileID: 0}
     - target: {fileID: 5875457902367334157, guid: 7b6ac71479a5f724d8c7d09ca30191c4,
         type: 3}
@@ -2096,7 +2087,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 824954660}
     m_Modifications:
     - target: {fileID: 8994020789085006034, guid: b66065ed23d2353488b9dec605742a47,
         type: 3}
@@ -2141,7 +2132,7 @@ PrefabInstance:
     - target: {fileID: 8994020789085006039, guid: b66065ed23d2353488b9dec605742a47,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8994020789085006039, guid: b66065ed23d2353488b9dec605742a47,
         type: 3}
@@ -2158,10 +2149,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8994020789085006038, guid: b66065ed23d2353488b9dec605742a47,
-        type: 3}
-      propertyPath: seaGullManagerGameObject
-      value: 
-      objectReference: {fileID: 1085583331}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b66065ed23d2353488b9dec605742a47, type: 3}

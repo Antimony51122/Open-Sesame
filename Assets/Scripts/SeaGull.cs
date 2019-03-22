@@ -50,6 +50,13 @@ public class SeaGull : MonoBehaviour {
 
         ChangeAnimation();
         ChangeRigidBodyType();
+        StartCoroutine(ChangeZIndex());
+    }
+
+    // make the z-index further thus it can be hidden in water when fallen
+    private IEnumerator ChangeZIndex() {
+        yield return new WaitForSeconds(0.50f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0.5f);
     }
 
     private void ChangeAnimation() {
@@ -61,6 +68,7 @@ public class SeaGull : MonoBehaviour {
         rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
     }
 
+    // get rid off all downwards force and make the object slowly move with water towards left
     private void FlowWithWater() {
         if (transform.position.y < 0.5f) {
             rigidbody2D.gravityScale = 0;
