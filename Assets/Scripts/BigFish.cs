@@ -24,7 +24,7 @@ public class BigFish : MonoBehaviour {
 
     void Start() {
         playerHealth = FindObjectOfType<PlayerHealth>();
-        jaw = FindObjectOfType<Jaw>();
+        jaw          = FindObjectOfType<Jaw>();
     }
 
     void Update() {

@@ -12,6 +12,8 @@ public class ArduinoHelper : MonoBehaviour {
     public float angle_l; // left leg open angle 
     public float angle_r; // right leg open angle
 
+    public int buttonNum;
+
     public string path; // the file address the angle data will be written into
 
     // ------------------------------------------------------
@@ -38,9 +40,11 @@ public class ArduinoHelper : MonoBehaviour {
         if (sp.IsOpen) {
             try {
                 string value = sp.ReadLine();
-                string[] getAngle = value.Split(',');
-                angle_r = float.Parse(getAngle[0]);
-                angle_l = float.Parse(getAngle[1]);
+                string[] getValue = value.Split(',');
+                angle_r   = float.Parse(getValue[0]);
+                angle_l   = float.Parse(getValue[1]);
+                buttonNum = int.Parse(getValue[2]);
+                Debug.Log(buttonNum);
             } catch (System.Exception) {
                 //throw;
             }

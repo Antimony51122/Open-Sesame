@@ -23,13 +23,13 @@ public class SpawnManager : MonoBehaviour {
     private Vector3 spawnPos;
 
 
-    ///////////////
-    // Main Loop //
-    ///////////////
+    /////////////////
+    /// Main Loop ///
+    /////////////////
 
     void Start() {
         // trigger spawning new object, starting from 2s, with frequency of once each 2s
-        InvokeRepeating("spawnObject", 2.0f, 2.0f);
+        InvokeRepeating("spawnObject", 2.0f, spawnInterval);
     }
 
     void Update() {
@@ -52,6 +52,7 @@ public class SpawnManager : MonoBehaviour {
 
     // TODO: trash coming on both altitude, or otherwise the player doesn't need to close mouth anymore
     // TODO: gradually increase the speed of object moving towards left
+    // TODO: Choose between left, right both legs + seagull mode
 
     private void spawnObject() {
         // instantiate the next spawn
@@ -96,4 +97,5 @@ public class SpawnManager : MonoBehaviour {
         // make the current item a child of the SpawnManager
         item.transform.parent = transform;
     }
+    
 }

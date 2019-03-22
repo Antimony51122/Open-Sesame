@@ -11,7 +11,8 @@ public class Whale : MonoBehaviour {
 
     // determine whether the moving down posture of the whale is valid
     // when at higher position, moving down is valid while moving up is invalid and vice versa
-    private bool isMovingDownValid;
+    // set public to be accessed by Splash Manager to determine whether splash is valid
+    public bool isMovingDownValid;
 
     // define the 3 states the whale's  postures switches between 
     enum State {
@@ -115,7 +116,7 @@ public class Whale : MonoBehaviour {
     // ----- Potentiometer Control -----
 
     void PotentiometerControl(float angle) {
-        if (angle > 20f) {
+        if (angle > 60f) {
             StartCoroutine(MoveDown());
         } else if (angle < 5f) {
             StartCoroutine(MoveUp());
