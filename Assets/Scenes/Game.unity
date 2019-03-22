@@ -1927,6 +1927,11 @@ PrefabInstance:
       propertyPath: whaleGameObject
       value: 
       objectReference: {fileID: 277998086}
+    - target: {fileID: 5875457902367334157, guid: 7b6ac71479a5f724d8c7d09ca30191c4,
+        type: 3}
+      propertyPath: arduinoGameObject
+      value: 
+      objectReference: {fileID: 999976739}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b6ac71479a5f724d8c7d09ca30191c4, type: 3}
 --- !u!1001 &7442594956410234249

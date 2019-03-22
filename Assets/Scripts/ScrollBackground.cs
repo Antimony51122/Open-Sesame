@@ -10,7 +10,7 @@ public class ScrollBackground : MonoBehaviour {
     [SerializeField] private float   scrollSpeed = -4f;
     [SerializeField] private int     resetX      = -32;
 
-    private Vector2 startPos = new Vector2();
+    private Vector3 startPos = new Vector3();
     private float xPos;
     private float yPos;
 
@@ -44,7 +44,7 @@ public class ScrollBackground : MonoBehaviour {
         // when the center of Wave scrolls to one screen width to the left of the original center,
         // reset the X of the Wave entity to it's original starting position
         if (xPos < resetX) {
-            transform.position = new Vector2(startPos.x, yPos);
+            transform.position = new Vector3(startPos.x, yPos, startPos.z);
         }
 
         // ------- oscillation movement implementation -------

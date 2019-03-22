@@ -7,6 +7,8 @@ public class PlayerHealth : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
+    private int score;
+
     [SerializeField] private float health             = 1f;
     [SerializeField] private float healthMax          = 1f;
     [SerializeField] private float healthMin          = 0f;
@@ -16,13 +18,19 @@ public class PlayerHealth : MonoBehaviour {
     private Transform barMask;
     private Transform bar;
 
+
+    /////////////////
+    /// Main Loop ///
+    /////////////////
+
     void Awake() {
         barMask = transform.Find("Green Bar Mask");
-        bar = transform.Find("Green Bar");
+        bar     = transform.Find("Green Bar");
     }
 
     void Start() {
-
+        // initialise the player score with 0
+        score = 0;
     }
 
     void Update() {
@@ -64,10 +72,12 @@ public class PlayerHealth : MonoBehaviour {
 
     public void EatSmallFish() {
         health += 0.2f;
+        score += 20;
     }
 
     public void EatBigFish() {
         health += 0.4f;
+        score += 40;
     }
 
     public void EatTrash() {

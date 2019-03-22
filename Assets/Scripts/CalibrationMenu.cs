@@ -46,6 +46,7 @@ public class CalibrationMenu : MonoBehaviour {
         angleLeftText.text = angleLeft.ToString();
         angleRightText.text = angleRight.ToString();
 
+        // set the angle constraints of two legs
         NoteLeftConstraint();
         NoteRightConstraint();
     }
