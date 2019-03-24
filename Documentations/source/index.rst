@@ -3,8 +3,62 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-************************
-OpenSesame Documentation
-************************
+*************************
+Open Sesame Documentation
+*************************
 
-.. code-block:: C#
+About
+=====
+
+This is the documentation for the group Open Sesame Project for the HCARD module, in March 2019.
+
+The project is hosted on Github:
+
+The Project Members:
+--------------------
+
+:Mechanical:
+   * Federica Spinola
+   * Florence Wu
+   * Vincent Ziliang Song
+
+:Sensor Communications:
+   * Junke Yao
+   * George Rui Zhou
+
+:Software & UI Design:
+   * Renke Huang
+
+For enquiries on this documentation or source code, please contact rh3014@ic.ac.uk
+
+Summary
+=======
+
+The goal of his project was to create a ...
+
+
+
+Contents
+========
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Mechanical
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Sensor Communications
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Software & UI Design
+
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
