@@ -7,8 +7,8 @@ public class ScrollBackground : MonoBehaviour {
     // Config Params
     // ------------------------------------------------------
 
-    [SerializeField] private float   scrollSpeed = -4f;
-    [SerializeField] private int     resetX      = -32;
+    [SerializeField] private float scrollSpeed = -4f;
+    [SerializeField] private int   resetX      = -32;
 
     private Vector3 startPos = new Vector3();
     private float xPos;
@@ -64,4 +64,29 @@ public class ScrollBackground : MonoBehaviour {
         }
     }
 
+}
+
+
+[SerializeField] private float scrollSpeed = -4f;
+[SerializeField] private int resetX = -32;
+
+void Start() {
+    // override the start position to its initial sprite position
+    startPos = transform.position;
+}
+
+void Update() {
+    xPos = transform.position.x;
+    yPos = transform.position.y;
+
+    float displacement = Time.deltaTime * scrollSpeed;
+    transform.Translate(Vector2.right * displacement);
+
+    // when the center of Wave scrolls to one screen width to the left of the original center,
+    // reset the X of the Wave entity to it's original starting position
+    if (xPos < resetX) {
+        transform.position = new Vector3(startPos.x, yPos, startPos.z);
+    }
+
+    ...
 }

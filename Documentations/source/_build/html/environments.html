@@ -1,0 +1,140 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Environment Objects &#8212; OpenSesame_Docs  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="figure align-center">
+<img alt="_images/Cover.jpg" src="_images/Cover.jpg" />
+</div>
+<div class="section" id="environment-objects">
+<h1>Environment Objects<a class="headerlink" href="#environment-objects" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="scene-object-leftwards-movement">
+<h2>Scene Object Leftwards Movement<a class="headerlink" href="#scene-object-leftwards-movement" title="Permalink to this headline">¶</a></h2>
+<p>In order to convey the effect that whale is swimming towards right whilst its relative x-position to the screen boundary maintains, functions need to be defined to let the various objects such as corel, wave and clouds scroll to the left at different speeds which also engaged a parallel effect between further and closer objects.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">scrollSpeed</span> <span class="p">=</span> <span class="p">-</span><span class="m">4f</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">int</span> <span class="n">resetX</span> <span class="p">=</span> <span class="p">-</span><span class="m">32</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// override the start position to its initial sprite position</span>
+    <span class="n">startPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">xPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">yPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">scrollSpeed</span><span class="p">;</span>
+    <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">);</span>
+
+    <span class="c1">// when the center of Wave scrolls to one screen width to the left of the original center,</span>
+    <span class="c1">// reset the X of the Wave entity to it&#39;s original starting position</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">xPos</span> <span class="p">&lt;</span> <span class="n">resetX</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">startPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">yPos</span><span class="p">,</span> <span class="n">startPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="align-center figure" id="id1">
+<img alt="_images/WaveEntity_Editor.jpg" src="_images/WaveEntity_Editor.jpg" />
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">WaveEntity</span></code> Object Inspector Screenshot</span></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">OpenSesame_Docs</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Renke Huang.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/environments.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

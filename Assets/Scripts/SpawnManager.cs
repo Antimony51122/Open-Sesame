@@ -52,9 +52,7 @@ public class SpawnManager : MonoBehaviour {
     // Customised Methods
     // ------------------------------------------------------
 
-    // TODO: trash coming on both altitude, or otherwise the player doesn't need to close mouth anymore
     // TODO: gradually increase the speed of object moving towards left
-    // TODO: Choose between left, right both legs + seagull mode
 
     private void spawnObject() {
         // instantiate the next spawn
@@ -105,5 +103,4 @@ public class SpawnManager : MonoBehaviour {
         item.transform.parent = transform;
     }
     
-
 }

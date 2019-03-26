@@ -11,8 +11,7 @@ public class ArduinoHelper : MonoBehaviour {
 
     public float angle_l; // left leg open angle 
     public float angle_r; // right leg open angle
-
-    public int buttonNum;
+    public int buttonNum; // binary between 0 and 1 from the button output
 
     public string path; // the file address the angle data will be written into
 
@@ -22,7 +21,7 @@ public class ArduinoHelper : MonoBehaviour {
 
     private WriteTextHelper writeTextHelper;
 
-    // M0 arduino
+    // M0 Arduino
     public SerialPort sp = new SerialPort("COM5", 9600);
 
     /////////////////
