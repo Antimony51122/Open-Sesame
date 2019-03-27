@@ -1,0 +1,7 @@
+.. figure:: ../_static/Software_UI/Environment/Cover.jpg
+    :align: center
+
+********************************
+Objects Spawn & Their Properties
+********************************
+

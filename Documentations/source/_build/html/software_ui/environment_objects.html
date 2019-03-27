@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Environment Objects &mdash; OpenSesame_Docs  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> OpenSesame_Docs
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Software &amp; UI Design</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="player_control.html">Player Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_health.html">Player Health</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spawn_objects.html">Objects Spawn &amp; Their Properties</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OpenSesame_Docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Environment Objects</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/software_ui/environment_objects.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="figure align-center">
+<img alt="../_images/Cover1.jpg" src="../_images/Cover1.jpg" />
+</div>
+<div class="section" id="environment-objects">
+<h1>Environment Objects<a class="headerlink" href="#environment-objects" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="scene-object-leftwards-movement">
+<h2>Scene Object Leftwards Movement<a class="headerlink" href="#scene-object-leftwards-movement" title="Permalink to this headline">¶</a></h2>
+<p>In order to convey the effect that whale is swimming towards right whilst its relative x-position to the screen boundary maintains, functions need to be defined to let the various objects such as corel, wave and clouds scroll to the left at different speeds which also engaged a parallel effect between further and closer objects.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">scrollSpeed</span> <span class="p">=</span> <span class="p">-</span><span class="m">4f</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">int</span> <span class="n">resetX</span> <span class="p">=</span> <span class="p">-</span><span class="m">32</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// override the start position to its initial sprite position</span>
+    <span class="n">startPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">xPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">yPos</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">scrollSpeed</span><span class="p">;</span>
+    <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">);</span>
+
+    <span class="c1">// when the center of Wave scrolls to one screen width to the left of the original center,</span>
+    <span class="c1">// reset the X of the Wave entity to it&#39;s original starting position</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">xPos</span> <span class="p">&lt;</span> <span class="n">resetX</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">startPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">yPos</span><span class="p">,</span> <span class="n">startPos</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="align-center figure" id="id1">
+<img alt="../_images/WaveEntity_Editor.jpg" src="../_images/WaveEntity_Editor.jpg" />
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">WaveEntity</span></code> Object Inspector Screenshot</span></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order to create a constant flow movement of the wave, 3 identical wave sprites with the same width as the screen width have been put in a row. When the center of the <code class="docutils literal notranslate"><span class="pre">WaveEntity</span></code> which is the container of 3 wave sprites scrolls to one screen width to the left of the original center, reset the X position of the Wave entity to it’s original starting position thus create a constance flowing effect.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">An oscillating algorithm has been implemented on the wave entity to mimic the dynamic of real waves. 3 layers of wave entities fluctuate according to various periods</p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// for sine periodic oscillation movement implementation</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">bool</span> <span class="n">isOscillating</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">Vector2</span> <span class="n">movementVector</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span> <span class="m">0.25f</span><span class="p">);</span>
+<span class="na">[SerializeField]</span> <span class="kt">float</span> <span class="n">period</span> <span class="p">=</span> <span class="m">2f</span><span class="p">;</span>
+
+<span class="c1">// 0 for not moved, 1 for fully moved.</span>
+<span class="na">[Range(0, 1)]</span> <span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">movementFactor</span><span class="p">;</span>
+
+<span class="k">private</span> <span class="n">Vector2</span> <span class="n">offset</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// ------- oscillation movement implementation -------</span>
+    <span class="c1">// protect against period is zero</span>
+    <span class="c1">// period less than or equal to the smallest thing we can represent (as good as 0)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">period</span> <span class="p">&lt;=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Epsilon</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">float</span> <span class="n">cycles</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">time</span> <span class="p">/</span> <span class="n">period</span><span class="p">;</span> <span class="c1">// grows continually from 0</span>
+
+    <span class="k">const</span> <span class="kt">float</span> <span class="n">tau</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">PI</span> <span class="p">*</span> <span class="m">2f</span><span class="p">;</span> <span class="c1">// about 6.28</span>
+    <span class="kt">float</span> <span class="n">rawSinWave</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Sin</span><span class="p">(</span><span class="n">cycles</span> <span class="p">*</span> <span class="n">tau</span><span class="p">);</span> <span class="c1">// goes from -1 to +1</span>
+
+    <span class="n">movementFactor</span> <span class="p">=</span> <span class="n">rawSinWave</span> <span class="p">/</span> <span class="m">2f</span><span class="p">;</span>
+    <span class="n">offset</span> <span class="p">=</span> <span class="n">movementFactor</span> <span class="p">*</span> <span class="n">movementVector</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">isOscillating</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">down</span> <span class="p">*</span> <span class="n">offset</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Renke Huang
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. figure:: _static/Cover.jpg
+.. figure:: _static/Software_UI/Environment/Cover.jpg
     :align: center
 
 
@@ -21,17 +21,16 @@ The project is hosted on Github:
 The Project Members:
 --------------------
 
-:Mechanical:
-   * Federica Spinola
-   * Florence Wu
-   * Vincent Ziliang Song
-
-:Sensor Communications:
-   * Junke Yao
-   * George Rui Zhou
-
-:Software & UI Design:
-   * Renke Huang
++--------------------------+-----------------------------+
+|  Mechanical              | * Federica Spinola          |
+|                          | * Florence Wu               |
+|                          | * Vincent Ziliang Song      |
++--------------------------+-----------------------------+
+| Sensor Communications    | * Junke Yao                 |
+|                          | * George Rui Zhou           |
++--------------------------+-----------------------------+
+| Software & UI Design     | * Renke Huang               |
++--------------------------+-----------------------------+
 
 For enquiries on this documentation or source code, please contact rh3014@ic.ac.uk
 
@@ -57,6 +56,11 @@ Contents
    :maxdepth: 2
    :caption: Software & UI Design
 
+   software_ui/intro.rst
+   software_ui/player_control.rst
+   software_ui/player_health.rst
+   software_ui/spawn_objects.rst
+   software_ui/environment_objects.rst
 
 
 
