@@ -221,6 +221,100 @@
 </div>
 <div class="section" id="whale-body-movement">
 <h2>Whale Body Movement<a class="headerlink" href="#whale-body-movement" title="Permalink to this headline">¶</a></h2>
+<p>In order to make the whale idle including whate body without jaw and the jaw moving at the same time, the two Prefabs have been wrapped in a parent GameObject of Whale and the script has been executed onto the parent object as well:</p>
+<img alt="../_images/Whale.jpg" class="align-center" src="../_images/Whale.jpg" />
+<p>The implementation of the whale body movement starts with defining the 3 plausible states a current whale could have:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// Whale.js</span>
+
+<span class="k">enum</span> <span class="n">State</span> <span class="p">{</span>
+    <span class="n">movingDown</span><span class="p">,</span>
+    <span class="n">movingUp</span><span class="p">,</span>
+    <span class="n">stop</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Due that the up and down movements are continous rather then instantly, the parallel running of up-down movements and other implementations have been processed simultaneously using Asynchronous Programming:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// Whale.js (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">MovementHandler</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">State</span><span class="p">.</span><span class="n">movingDown</span><span class="p">:</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span>
+                <span class="p">-</span><span class="n">Vector3</span><span class="p">.</span><span class="n">up</span> <span class="p">*</span> <span class="n">speed</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span>
+                <span class="n">Space</span><span class="p">.</span><span class="n">World</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">State</span><span class="p">.</span><span class="n">movingUp</span><span class="p">:</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span>
+                <span class="n">Vector3</span><span class="p">.</span><span class="n">up</span> <span class="p">*</span> <span class="n">speed</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span><span class="p">,</span>
+                <span class="n">Space</span><span class="p">.</span><span class="n">World</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">State</span><span class="p">.</span><span class="n">stop</span><span class="p">:</span>
+            <span class="c1">// stop the whale by assign the current position to its position</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="p">:</span>
+            <span class="n">transform</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="c1">// ----- Change Movements by Manipulating States -----</span>
+
+<span class="k">private</span> <span class="n">IEnumerator</span> <span class="nf">MoveDown</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">isMovingDownValid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">movingDown</span><span class="p">;</span>
+        <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">WaitForSeconds</span><span class="p">(</span><span class="m">0.75f</span><span class="p">);</span> <span class="c1">// give 0.75s position translation time</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">stop</span><span class="p">;</span>
+
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="n">IEnumerator</span> <span class="nf">MoveUp</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">isMovingDownValid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">movingUp</span><span class="p">;</span>
+        <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">WaitForSeconds</span><span class="p">(</span><span class="m">0.75f</span><span class="p">);</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">stop</span><span class="p">;</span>
+
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">when moving either up and down, the whale will keep in moving state for 0.75s duration and then switch to stop posture.</p>
+</div>
+<p>In order to prevent the whale from moving downwards when it’s already low, or upwards when it’s already surfaced, a boolean property of <code class="docutils literal notranslate"><span class="pre">isMovingDownValid</span></code> has been used to check the currnet altitude and constraint the movement of the whale idle only upwards when it’s in lower altitude, and only downwards when it’s in upper altitude.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// Whale.js (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="n">IEnumerator</span> <span class="nf">MoveDown</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">isMovingDownValid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">movingDown</span><span class="p">;</span>
+        <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">WaitForSeconds</span><span class="p">(</span><span class="m">0.75f</span><span class="p">);</span> <span class="c1">// give 0.75s position translation time</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">stop</span><span class="p">;</span>
+
+        <span class="c1">// banning the whale from moving further downwards when it&#39;s already in lower position</span>
+        <span class="n">isMovingDownValid</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="n">IEnumerator</span> <span class="nf">MoveUp</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(!</span><span class="n">isMovingDownValid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">movingUp</span><span class="p">;</span>
+        <span class="k">yield</span> <span class="k">return</span> <span class="k">new</span> <span class="nf">WaitForSeconds</span><span class="p">(</span><span class="m">0.75f</span><span class="p">);</span>
+        <span class="n">state</span> <span class="p">=</span> <span class="n">State</span><span class="p">.</span><span class="n">stop</span><span class="p">;</span>
+
+        <span class="c1">// banning the whale from moving further upwards when it&#39;s already in higher position</span>
+        <span class="n">isMovingDownValid</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="splash">
 <h2>Splash<a class="headerlink" href="#splash" title="Permalink to this headline">¶</a></h2>

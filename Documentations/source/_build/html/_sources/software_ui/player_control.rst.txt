@@ -65,7 +65,106 @@ Then, open the jaw to maximum of 60 degrees and map this to the maximum angle ra
 Whale Body Movement
 -------------------
 
+In order to make the whale idle including whate body without jaw and the jaw moving at the same time, the two Prefabs have been wrapped in a parent GameObject of Whale and the script has been executed onto the parent object as well:
 
+.. image:: ../_static/Software_UI/Player/Whale.jpg
+   :align: center
+
+The implementation of the whale body movement starts with defining the 3 plausible states a current whale could have:
+
+.. code-block:: C#
+
+    // Whale.js 
+
+    enum State {
+        movingDown,
+        movingUp,
+        stop
+    }
+
+Due that the up and down movements are continous rather then instantly, the parallel running of up-down movements and other implementations have been processed simultaneously using Asynchronous Programming:
+
+.. code-block:: C#
+
+    // Whale.js (... represents other code blocks irrelevant to the current session)
+
+    private void MovementHandler() {
+        switch (state) {
+            case State.movingDown:
+                transform.Translate(
+                    -Vector3.up * speed * Time.deltaTime,
+                    Space.World);
+                break;
+            case State.movingUp:
+                transform.Translate(
+                    Vector3.up * speed * Time.deltaTime,
+                    Space.World);
+                break;
+            case State.stop:
+                // stop the whale by assign the current position to its position
+                transform.position = gameObject.transform.position;
+                break;
+            default:
+                transform.position = gameObject.transform.position;
+                break;
+        }
+    }
+
+    ...
+
+    // ----- Change Movements by Manipulating States -----
+
+    private IEnumerator MoveDown() {
+        if (isMovingDownValid) {
+            state = State.movingDown;
+            yield return new WaitForSeconds(0.75f); // give 0.75s position translation time
+            state = State.stop;
+
+            ...
+        }
+    }
+
+    private IEnumerator MoveUp() {
+        if (!isMovingDownValid) {
+            state = State.movingUp;
+            yield return new WaitForSeconds(0.75f);
+            state = State.stop;
+
+            ...
+        }
+    }
+
+.. tip:: when moving either up and down, the whale will keep in moving state for 0.75s duration and then switch to stop posture.
+
+In order to prevent the whale from moving downwards when it's already low, or upwards when it's already surfaced, a boolean property of ``isMovingDownValid`` has been used to check the currnet altitude and constraint the movement of the whale idle only upwards when it's in lower altitude, and only downwards when it's in upper altitude.
+
+.. code-block:: C#
+
+    // Whale.js (... represents other code blocks irrelevant to the current session)
+
+    ...
+
+    private IEnumerator MoveDown() {
+        if (isMovingDownValid) {
+            state = State.movingDown;
+            yield return new WaitForSeconds(0.75f); // give 0.75s position translation time
+            state = State.stop;
+
+            // banning the whale from moving further downwards when it's already in lower position
+            isMovingDownValid = false;
+        }
+    }
+
+    private IEnumerator MoveUp() {
+        if (!isMovingDownValid) {
+            state = State.movingUp;
+            yield return new WaitForSeconds(0.75f);
+            state = State.stop;
+
+            // banning the whale from moving further upwards when it's already in higher position
+            isMovingDownValid = true;
+        }
+    }
 
 Splash
 ------
