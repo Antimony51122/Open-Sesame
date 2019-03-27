@@ -5,8 +5,8 @@
 Player Control
 **************
 
-Jaw
----
+Jaw Rotation
+------------
 
 For the convenience of development, the idle of the whale has been divided into two parts: 
 
@@ -62,6 +62,11 @@ Then, open the jaw to maximum of 60 degrees and map this to the maximum angle ra
         transform.localRotation = Quaternion.Euler(0, 0, -angle);
     }
 
+Whale Body Movement
+-------------------
+
+
+
 Splash
 ------
 
@@ -106,5 +111,93 @@ When the button connected to Arduino has been pressed, all 3 components above wi
         Invoke("DeactivateSplash", splashDuration);
     }
 
+.. note:: Since the button stays at state of ``1`` during being pressed, this state will trigger multiple splashs in a row during the pressing. Therefore, a logic has to be implemented to allow only one splash within 0.5s by setting ``isSplashActivatable`` to ``false`` immediately after each splash:
 
+.. code-block:: C#
 
+    public class SplashManager : MonoBehaviour {
+
+        [SerializeField] private float splashDuration = 0.5f;
+        private int buttonPressed = 0;
+
+        private bool isSplashActivatable;
+
+        ...
+
+        void Start() {
+            ...
+
+            // initially set the splash activatable to true
+            isSplashActivatable = true;
+        }
+
+        ...
+
+        // ------- Button Control -------
+
+        void ButtonControlSplash() {
+            if (buttonPressed == 1) {
+                ActivateSplash();
+
+                PreventMultipleSplash();
+            }
+        }
+
+        // ------- Enable and Disable Splash Activatable to mitigate splash overlay -------
+
+        void PreventMultipleSplash() {
+            // prevent the user from splashing various times within short time
+            isSplashActivatable = false;
+
+            // set the splash activatable property back to true after a short delay
+            Invoke("SplashActivatable", 0.5f);
+        }
+
+        void SplashActivatable() {
+            isSplashActivatable = true;
+        }
+
+        // ------- Splash Manipulations -------
+
+        void ActivateSplash() {
+            box2D.enabled          = true;
+            animator.enabled       = true;
+            spriteRenderer.enabled = true;
+            Invoke("DeactivateSplash", splashDuration);
+        }
+
+        void DeactivateSplash() {
+            box2D.enabled          = false;
+            animator.enabled       = false;
+            spriteRenderer.enabled = false;
+        }
+    }
+
+Lastly, the splash can only happen when the whale is surfaced. The information whether the whale is surfaced or not can be retrieved from the ``Whale`` class:
+
+.. code-block:: C#
+
+    [SerializeField] private GameObject whaleGameObject;
+    private Whale whale;
+
+    ...
+
+    void Start() {
+        ...
+
+        whale = whaleGameObject.GetComponent<Whale>();
+
+        ...
+    }
+
+    void Update() {
+        ...
+
+        // determine whether the whale altitude and only trigger at higher position
+        if (whale.isMovingDownValid && isSplashActivatable) {
+            KeyboardControlSplash();
+            ButtonControlSplash();
+        }
+    }
+
+.. tip:: Using the property of ``isMovingDownValid`` of ``Whale`` class to determine the altitude level of the Whale, if it is ``true``, that means the whale is surfaced and thus Splash is valid

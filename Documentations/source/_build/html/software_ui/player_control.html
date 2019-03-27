@@ -88,7 +88,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Player Control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#jaw">Jaw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jaw-rotation">Jaw Rotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#whale-body-movement">Whale Body Movement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#splash">Splash</a></li>
 </ul>
 </li>
@@ -164,8 +165,8 @@
 </div>
 <div class="section" id="player-control">
 <h1>Player Control<a class="headerlink" href="#player-control" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="jaw">
-<h2>Jaw<a class="headerlink" href="#jaw" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="jaw-rotation">
+<h2>Jaw Rotation<a class="headerlink" href="#jaw-rotation" title="Permalink to this headline">¶</a></h2>
 <p>For the convenience of development, the idle of the whale has been divided into two parts:</p>
 <ul class="simple">
 <li>the body part (static animation which will not be interacting with any user input)</li>
@@ -218,6 +219,9 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="whale-body-movement">
+<h2>Whale Body Movement<a class="headerlink" href="#whale-body-movement" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="splash">
 <h2>Splash<a class="headerlink" href="#splash" title="Permalink to this headline">¶</a></h2>
 <p>The splash manipulation has been implemented in a way animations and box colliders of the splash object are pre-defined but hidden as default when the splash has not been triggered:</p>
@@ -254,6 +258,98 @@
     <span class="n">Invoke</span><span class="p">(</span><span class="s">&quot;DeactivateSplash&quot;</span><span class="p">,</span> <span class="n">splashDuration</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since the button stays at state of <code class="docutils literal notranslate"><span class="pre">1</span></code> during being pressed, this state will trigger multiple splashs in a row during the pressing. Therefore, a logic has to be implemented to allow only one splash within 0.5s by setting <code class="docutils literal notranslate"><span class="pre">isSplashActivatable</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> immediately after each splash:</p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">class</span> <span class="nc">SplashManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+
+<span class="na">    [SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">splashDuration</span> <span class="p">=</span> <span class="m">0.5f</span><span class="p">;</span>
+    <span class="k">private</span> <span class="kt">int</span> <span class="n">buttonPressed</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="kt">bool</span> <span class="n">isSplashActivatable</span><span class="p">;</span>
+
+    <span class="p">...</span>
+
+    <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">...</span>
+
+        <span class="c1">// initially set the splash activatable to true</span>
+        <span class="n">isSplashActivatable</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+
+    <span class="c1">// ------- Button Control -------</span>
+
+    <span class="k">void</span> <span class="nf">ButtonControlSplash</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">buttonPressed</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ActivateSplash</span><span class="p">();</span>
+
+            <span class="n">PreventMultipleSplash</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ------- Enable and Disable Splash Activatable to mitigate splash overlay -------</span>
+
+    <span class="k">void</span> <span class="nf">PreventMultipleSplash</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// prevent the user from splashing various times within short time</span>
+        <span class="n">isSplashActivatable</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+
+        <span class="c1">// set the splash activatable property back to true after a short delay</span>
+        <span class="n">Invoke</span><span class="p">(</span><span class="s">&quot;SplashActivatable&quot;</span><span class="p">,</span> <span class="m">0.5f</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">SplashActivatable</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">isSplashActivatable</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ------- Splash Manipulations -------</span>
+
+    <span class="k">void</span> <span class="nf">ActivateSplash</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">box2D</span><span class="p">.</span><span class="n">enabled</span>          <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">animator</span><span class="p">.</span><span class="n">enabled</span>       <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">spriteRenderer</span><span class="p">.</span><span class="n">enabled</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">Invoke</span><span class="p">(</span><span class="s">&quot;DeactivateSplash&quot;</span><span class="p">,</span> <span class="n">splashDuration</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">DeactivateSplash</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">box2D</span><span class="p">.</span><span class="n">enabled</span>          <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="n">animator</span><span class="p">.</span><span class="n">enabled</span>       <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="n">spriteRenderer</span><span class="p">.</span><span class="n">enabled</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Lastly, the splash can only happen when the whale is surfaced. The information whether the whale is surfaced or not can be retrieved from the <code class="docutils literal notranslate"><span class="pre">Whale</span></code> class:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">GameObject</span> <span class="n">whaleGameObject</span><span class="p">;</span>
+<span class="k">private</span> <span class="n">Whale</span> <span class="n">whale</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="n">whale</span> <span class="p">=</span> <span class="n">whaleGameObject</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Whale</span><span class="p">&gt;();</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// determine whether the whale altitude and only trigger at higher position</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">whale</span><span class="p">.</span><span class="n">isMovingDownValid</span> <span class="p">&amp;&amp;</span> <span class="n">isSplashActivatable</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">KeyboardControlSplash</span><span class="p">();</span>
+        <span class="n">ButtonControlSplash</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Using the property of <code class="docutils literal notranslate"><span class="pre">isMovingDownValid</span></code> of <code class="docutils literal notranslate"><span class="pre">Whale</span></code> class to determine the altitude level of the Whale, if it is <code class="docutils literal notranslate"><span class="pre">true</span></code>, that means the whale is surfaced and thus Splash is valid</p>
 </div>
 </div>
 </div>
