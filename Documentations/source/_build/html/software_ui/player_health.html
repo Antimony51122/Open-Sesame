@@ -260,9 +260,52 @@
 </tr>
 </tbody>
 </table>
+<p>There are two constraints on the health points of the player:</p>
+<ul class="simple">
+<li>the maximum health point (which is the HP when the player is fully healthy)</li>
+<li>the minimum health where the player die</li>
+</ul>
+<p>Since the health calculation has been normalise, the max and min are just 0 and 1:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">healthMax</span> <span class="p">=</span> <span class="m">1f</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">healthMin</span> <span class="p">=</span> <span class="m">0f</span><span class="p">;</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>When the health point are higher than the maximum by gaining points from the fish, it will be set back to the maximum. When it’s lower than the minimum, the program will directly load the death scene which is the replay scene:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="n">ConstantHealthDecrease</span><span class="p">();</span>
+    <span class="n">SetSize</span><span class="p">(</span><span class="n">health</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">health</span> <span class="p">&gt;</span> <span class="n">healthMax</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">health</span> <span class="p">=</span> <span class="n">healthMax</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">health</span> <span class="p">&lt;=</span> <span class="n">healthMin</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// player dead, load game over scene to reload</span>
+        <span class="n">sceneLoader</span><span class="p">.</span><span class="n">LoadReloadScene</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<div class="align-center figure" id="id1">
+<img alt="../_images/Reload_Scene.jpg" src="../_images/Reload_Scene.jpg" />
+<p class="caption"><span class="caption-text">Reload Scene</span></p>
+</div>
 </div>
 <div class="section" id="score">
 <h2>Score<a class="headerlink" href="#score" title="Permalink to this headline">¶</a></h2>
+<p>Apart from health point which is the essential factor for the player to be alive, score is another factor the player will be chasing upon.</p>
 </div>
 </div>
 

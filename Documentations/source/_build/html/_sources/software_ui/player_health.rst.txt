@@ -111,6 +111,55 @@ The Sprites of the three spawned objects has shown below:
 | |big_fish|   | |small_fish| | |trash|      |
 +--------------+--------------+--------------+
 
+There are two constraints on the health points of the player:
+
+* the maximum health point (which is the HP when the player is fully healthy)
+* the minimum health where the player die
+
+Since the health calculation has been normalise, the max and min are just 0 and 1:
+
+.. code-block:: C#
+
+    // PlayerHealth.cs (... represents other code blocks irrelevant to the current session)
+
+    ...
+
+    [SerializeField] private float healthMax = 1f;
+    [SerializeField] private float healthMin = 0f;
+
+    ...
+
+When the health point are higher than the maximum by gaining points from the fish, it will be set back to the maximum. When it's lower than the minimum, the program will directly load the death scene which is the replay scene:
+
+.. code-block:: C#
+
+    // PlayerHealth.cs (... represents other code blocks irrelevant to the current session)
+
+    ...
+
+    void Update() {
+        ...
+
+        ConstantHealthDecrease();
+        SetSize(health);
+
+        if (health > healthMax) {
+            health = healthMax;
+        } else if (health <= healthMin) {
+            // player dead, load game over scene to reload
+            sceneLoader.LoadReloadScene();
+        }
+    }
+
+    ...
+
+.. figure:: ../_static/Software_UI/Scenes/Reload_Scene.jpg
+    :align: center
+    :figclass: align-center
+
+    Reload Scene
 
 Score
 -----
+
+Apart from health point which is the essential factor for the player to be alive, score is another factor the player will be chasing upon.

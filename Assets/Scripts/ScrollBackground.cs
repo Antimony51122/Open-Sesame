@@ -67,32 +67,3 @@ public class ScrollBackground : MonoBehaviour {
 }
 
 
-// for sine periodic oscillation movement implementation
-[SerializeField] private bool isOscillating = false;
-[SerializeField] private Vector2 movementVector = new Vector2(0f, 0.25f);
-[SerializeField] float period = 2f;
-
-// 0 for not moved, 1 for fully moved.
-[Range(0, 1)] [SerializeField] private float movementFactor;
-
-private Vector2 offset;
-
-void Update() {
-    ...
-
-    // ------- oscillation movement implementation -------
-    // protect against period is zero
-    // period less than or equal to the smallest thing we can represent (as good as 0)
-    if (period <= Mathf.Epsilon) { return; }
-    float cycles = Time.time / period; // grows continually from 0
-
-    const float tau = Mathf.PI * 2f; // about 6.28
-    float rawSinWave = Mathf.Sin(cycles * tau); // goes from -1 to +1
-
-    movementFactor = rawSinWave / 2f;
-    offset = movementFactor * movementVector;
-
-    if (isOscillating) {
-        transform.Translate(Vector2.down * offset);
-    }
-}
