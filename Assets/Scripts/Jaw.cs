@@ -13,7 +13,7 @@ public class Jaw : MonoBehaviour {
 
     [SerializeField] private bool isRightLeg;
 
-    private float angleJaw; // whale jaw open angle controlled by right leg open angle
+    private float angleJaw; // whale jaw open angle controlled by leg open angle
 
     [SerializeField] private float speed = 120f;
 
@@ -50,11 +50,10 @@ public class Jaw : MonoBehaviour {
     void Update () {
         //Debug.Log(transform.position);
         
-        // 60 degree max in game  --> map to --> 
+        // 60 degree max in game --> map to --> user input range
         // Controlling Jaw by accessing to the right leg angle of the Serial output
         Debug.Log(calibrationMenu.angleRightConstraint);
         
-
         if (isRightLeg) {
             angleJaw = arduinoHelper.angle_r / (calibrationMenu.angleRightConstraint / 60f);
         }
@@ -63,7 +62,6 @@ public class Jaw : MonoBehaviour {
         }
 
         PotentiometerControl(angleJaw);
-
 
         KeyboardControl();
     }

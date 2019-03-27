@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Player Health" href="player_health.html" />
-    <link rel="prev" title="Open Sesame Documentation" href="../index.html" /> 
+    <link rel="next" title="Player Health &amp; Score" href="player_health.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,11 +80,21 @@
               
             
             
-              <p class="caption"><span class="caption-text">Software &amp; UI Design</span></p>
+              <p class="caption"><span class="caption-text">Sensor Communications</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../hardware_sensor/sensor_communication.html">Sensor Communication &amp; Tuning</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Software &amp; UI Design</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Player Control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="player_health.html">Player Health</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Player Control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#jaw">Jaw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#splash">Splash</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="player_health.html">Player Health &amp; Score</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spawn_objects.html">Objects Spawn &amp; Their Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_objects.html">Environment Objects</a></li>
 </ul>
 
             
@@ -154,6 +164,98 @@
 </div>
 <div class="section" id="player-control">
 <h1>Player Control<a class="headerlink" href="#player-control" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="jaw">
+<h2>Jaw<a class="headerlink" href="#jaw" title="Permalink to this headline">¶</a></h2>
+<p>For the convenience of development, the idle of the whale has been divided into two parts:</p>
+<ul class="simple">
+<li>the body part (static animation which will not be interacting with any user input)</li>
+<li>the jaw part (which will rotate according to rheostat value)</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../_images/Whale_no_Jaw.jpg"><img alt="whale_body" class="align-middle" src="../_images/Whale_no_Jaw.jpg" style="width: 293.6px; height: 180.4px;" /></a></td>
+<td><a class="reference internal" href="../_images/Jaw.jpg"><img alt="jaw" class="align-top" src="../_images/Jaw.jpg" style="width: 289.0px; height: 116.5px;" /></a></td>
+</tr>
+</tbody>
+</table>
+<p>Then, open the jaw to maximum of 60 degrees and map this to the maximum angle range the patient could open his leg (if the user chose Right leg mode of both leg mode, the system map the jaw open angle onto <code class="docutils literal notranslate"><span class="pre">angle_r</span></code> from Arduino Serial reading and vice versa):</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// Jaw.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">bool</span> <span class="n">isRightLeg</span><span class="p">;</span>
+
+<span class="k">private</span> <span class="kt">float</span> <span class="n">angleJaw</span><span class="p">;</span> <span class="c1">// whale jaw open angle controlled by leg open angle</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">isRightLeg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">angleJaw</span> <span class="p">=</span> <span class="n">arduinoHelper</span><span class="p">.</span><span class="n">angle_r</span> <span class="p">/</span> <span class="p">(</span><span class="n">calibrationMenu</span><span class="p">.</span><span class="n">angleRightConstraint</span> <span class="p">/</span> <span class="m">60f</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">angleJaw</span> <span class="p">=</span> <span class="n">arduinoHelper</span><span class="p">.</span><span class="n">angle_l</span> <span class="p">/</span> <span class="p">(</span><span class="n">calibrationMenu</span><span class="p">.</span><span class="n">angleRightConstraint</span> <span class="p">/</span> <span class="m">60f</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">PotentiometerControl</span><span class="p">(</span><span class="n">angleJaw</span><span class="p">);</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="c1">// ----- Arduino Potentiometer Control -----</span>
+
+<span class="k">void</span> <span class="nf">PotentiometerControl</span> <span class="p">(</span><span class="kt">float</span> <span class="n">angle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">transform</span><span class="p">.</span><span class="n">localRotation</span> <span class="p">=</span> <span class="n">Quaternion</span><span class="p">.</span><span class="n">Euler</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="n">angle</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="splash">
+<h2>Splash<a class="headerlink" href="#splash" title="Permalink to this headline">¶</a></h2>
+<p>The splash manipulation has been implemented in a way animations and box colliders of the splash object are pre-defined but hidden as default when the splash has not been triggered:</p>
+<img alt="../_images/Splash.jpg" class="align-center" src="../_images/Splash.jpg" />
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SplashManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// initially disable the box collider, animator and sprite render and trigger later</span>
+    <span class="n">box2D</span>         <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">BoxCollider2D</span><span class="p">&gt;();</span>
+    <span class="n">box2D</span><span class="p">.</span><span class="n">enabled</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+
+    <span class="n">animator</span>         <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Animator</span><span class="p">&gt;();</span>
+    <span class="n">animator</span><span class="p">.</span><span class="n">enabled</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+
+    <span class="n">spriteRenderer</span>         <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SpriteRenderer</span><span class="p">&gt;();</span>
+    <span class="n">spriteRenderer</span><span class="p">.</span><span class="n">enabled</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+
+    <span class="c1">// initially set the splash activatable to true</span>
+    <span class="n">isSplashActivatable</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>When the button connected to Arduino has been pressed, all 3 components above will be set to <code class="docutils literal notranslate"><span class="pre">true</span></code> and thus make usable basically by calling <code class="docutils literal notranslate"><span class="pre">ActivateSplash()</span></code> method:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">void</span> <span class="nf">ActivateSplash</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">box2D</span><span class="p">.</span><span class="n">enabled</span>          <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="n">animator</span><span class="p">.</span><span class="n">enabled</span>       <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="n">spriteRenderer</span><span class="p">.</span><span class="n">enabled</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="n">Invoke</span><span class="p">(</span><span class="s">&quot;DeactivateSplash&quot;</span><span class="p">,</span> <span class="n">splashDuration</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -164,10 +266,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="player_health.html" class="btn btn-neutral float-right" title="Player Health" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="player_health.html" class="btn btn-neutral float-right" title="Player Health &amp; Score" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="Open Sesame Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

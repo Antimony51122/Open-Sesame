@@ -52,6 +52,8 @@ Contents
    :maxdepth: 2
    :caption: Sensor Communications
 
+   hardware_sensor/sensor_communication.rst
+
 .. toctree::
    :maxdepth: 2
    :caption: Software & UI Design

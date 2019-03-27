@@ -101,15 +101,15 @@ public class SplashManager : MonoBehaviour {
     // ------- Splash Manipulations -------
 
     void ActivateSplash() {
-        box2D.enabled = true;
-        animator.enabled = true;
+        box2D.enabled          = true;
+        animator.enabled       = true;
         spriteRenderer.enabled = true;
         Invoke("DeactivateSplash", splashDuration);
     }
 
     void DeactivateSplash() {
-        box2D.enabled = false;
-        animator.enabled = false;
+        box2D.enabled          = false;
+        animator.enabled       = false;
         spriteRenderer.enabled = false;
     }
 }
