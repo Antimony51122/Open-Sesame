@@ -18,7 +18,7 @@ For the convenience of development, the idle of the whale has been divided into 
    :align: middle
 
 .. |jaw| image:: ../_static/Software_UI/Player/Jaw.jpg
-   :scale: 50%
+   :scale: 60%
    :align: top
 
 +--------------+--------------+

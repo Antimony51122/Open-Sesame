@@ -80,11 +80,20 @@
               
             
             
-              <p class="caption"><span class="caption-text">Software &amp; UI Design</span></p>
+              <p class="caption"><span class="caption-text">Sensor Communications</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../hardware_sensor/sensor_communication.html">Sensor Communication &amp; Tuning</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Software &amp; UI Design</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="player_control.html">Player Control</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Player Health &amp; Score</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Player Health &amp; Score</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sprite-manipulations">Sprite Manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#health-point-manipulations">Health Point Manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#score">Score</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="spawn_objects.html">Objects Spawn &amp; Their Properties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="environment_objects.html">Environment Objects</a></li>
 </ul>
@@ -156,6 +165,105 @@
 </div>
 <div class="section" id="player-health-score">
 <h1>Player Health &amp; Score<a class="headerlink" href="#player-health-score" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sprite-manipulations">
+<h2>Sprite Manipulations<a class="headerlink" href="#sprite-manipulations" title="Permalink to this headline">¶</a></h2>
+<p>The Player Health has been shown using 3 layers of sprites:</p>
+<ul class="simple">
+<li>main sprite including Whale idle on the top</li>
+<li>an invisible mask on top of the bottom bar</li>
+<li>the bottom bar which represents the actual Health</li>
+</ul>
+<img alt="../_images/Health_Bar.jpg" class="align-center" src="../_images/Health_Bar.jpg" />
+<p>The manipulation of the appearance of the health bar pursued with a way that rather than vary the size of the green bar, the size of the mask on the green bar has been varied according to the current health.</p>
+<p>To inplement this, the cached reference of the bar and the bar mask has been defined in prior:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="n">Transform</span> <span class="n">barMask</span><span class="p">;</span>
+<span class="k">private</span> <span class="n">Transform</span> <span class="n">bar</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Awake</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">barMask</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="s">&quot;Green Bar Mask&quot;</span><span class="p">);</span>
+    <span class="n">bar</span>     <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="s">&quot;Green Bar&quot;</span><span class="p">);</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The manipulation of of the size has been implemented using the following function:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">SetSize</span><span class="p">(</span><span class="kt">float</span> <span class="n">sizeNormalised</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">barMask</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(</span><span class="n">sizeNormalised</span><span class="p">,</span> <span class="m">1f</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="health-point-manipulations">
+<h2>Health Point Manipulations<a class="headerlink" href="#health-point-manipulations" title="Permalink to this headline">¶</a></h2>
+<p>Firstly, in order to engage the patient to use their legs, the health point constant decreases and can only regenerate by eating fish:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="c1">// ----- Health Manipulations -----</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">ConstantHealthDecrease</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">health</span> <span class="p">&gt;</span> <span class="n">healthMin</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">health</span> <span class="p">-=</span> <span class="n">healthDecreaseRate</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// ----- Eaten Behaviour -----</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">EatSmallFish</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">health</span> <span class="p">+=</span> <span class="m">0.2f</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">EatBigFish</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">health</span> <span class="p">+=</span> <span class="m">0.4f</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">On the other hand, to prevent the patient from opening the mouth of the whale all the time, a penalty measure has been implemented which is the trash that deduct health points when being eaten:</p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">EatTrash</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">health</span> <span class="p">-=</span> <span class="m">0.6f</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>All three functions will be called when the <code class="docutils literal notranslate"><span class="pre">Jaw</span></code> collides with each of the corresponding objects. This will be further discussed in “Object Spawn &amp; Their Properties” session.</p>
+<p>The Sprites of the three spawned objects has shown below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><img alt="big_fish" class="align-middle" src="../_images/bigFish_idol.png" /></td>
+<td><img alt="small_fish" class="align-top" src="../_images/smallFish_idol.png" /></td>
+<td><img alt="trash" class="align-top" src="../_images/Can.png" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="score">
+<h2>Score<a class="headerlink" href="#score" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
