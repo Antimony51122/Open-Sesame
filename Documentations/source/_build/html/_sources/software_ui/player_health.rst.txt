@@ -1,9 +1,8 @@
 .. figure:: ../_static/Software_UI/Environment/Cover.jpg
     :align: center
 
-*********************
 Player Health & Score
-*********************
+=====================
 
 Sprite Manipulations
 --------------------
@@ -176,6 +175,8 @@ Then we manipulate it by updating ``scoreText.text`` in the script:
 
 .. code-block:: C#
 
+    // PlayerHealth.cs (... represents other code blocks irrelevant to the current session)
+
     private int score;
     [SerializeField] private TextMeshProUGUI scoreText;
 
@@ -190,6 +191,8 @@ Then we manipulate it by updating ``scoreText.text`` in the script:
 Eating fish and splash the seagull both have effect on the scoring:
 
 .. code-block:: C#
+
+    // PlayerHealth.cs (... represents other code blocks irrelevant to the current session)
 
     ...
 

@@ -312,7 +312,9 @@
 <p class="caption"><span class="caption-text">Score TextMeshPro in Editor</span></p>
 </div>
 <p>Then we manipulate it by updating <code class="docutils literal notranslate"><span class="pre">scoreText.text</span></code> in the script:</p>
-<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">private</span> <span class="kt">int</span> <span class="n">score</span><span class="p">;</span>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="kt">int</span> <span class="n">score</span><span class="p">;</span>
 <span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">TextMeshProUGUI</span> <span class="n">scoreText</span><span class="p">;</span>
 
 <span class="p">...</span>
@@ -325,7 +327,9 @@
 </pre></div>
 </div>
 <p>Eating fish and splash the seagull both have effect on the scoring:</p>
-<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// PlayerHealth.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
 
 <span class="c1">// ----- Eaten Behaviour -----</span>
 

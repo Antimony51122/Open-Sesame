@@ -89,7 +89,13 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="player_control.html">Player Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="player_health.html">Player Health &amp; Score</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Objects Spawn &amp; Their Properties</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Objects Spawn &amp; Their Properties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objects-spawn">Objects Spawn</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#items-in-sea">Items in Sea</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="environment_objects.html">Environment Objects</a></li>
 </ul>
 
@@ -160,6 +166,18 @@
 </div>
 <div class="section" id="objects-spawn-their-properties">
 <h1>Objects Spawn &amp; Their Properties<a class="headerlink" href="#objects-spawn-their-properties" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="objects-spawn">
+<h2>Objects Spawn<a class="headerlink" href="#objects-spawn" title="Permalink to this headline">¶</a></h2>
+<p>The object spawn action has been conducted in two scripts in parallel:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">SpawnManager.cs</span></code> (which takes charge of all items spawn in the sea)</li>
+<li><code class="docutils literal notranslate"><span class="pre">SpawnSeaGullManager.cs</span></code> (which only takes charge of spawning seagull)</li>
+</ul>
+<p>The two classes have no interactions and effect on each other and working simulataniously.</p>
+<div class="section" id="items-in-sea">
+<h3>Items in Sea<a class="headerlink" href="#items-in-sea" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
 </div>
 
 

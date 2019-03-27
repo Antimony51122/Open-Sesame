@@ -1,9 +1,8 @@
 .. figure:: ../_static/Software_UI/Environment/Cover.jpg
     :align: center
 
-*******************
 Environment Objects
-*******************
+===================
 
 Scene Object Leftwards Movement
 -------------------------------
