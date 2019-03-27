@@ -370,6 +370,26 @@
 </div>
 <div class="section" id="destroy-objects">
 <h3>Destroy Objects<a class="headerlink" href="#destroy-objects" title="Permalink to this headline">¶</a></h3>
+<p>If the object spawned hasn’t been eaten, it will continue to move left-wards and stack in the spawn manager parent object, which will consume plenty of computer memory and thus harmful for the program.</p>
+<p>Therefore, all object will be destroyed if they are outside the left boundary of the screen to save the computational power.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// DestroyObject.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">float</span> <span class="n">destroyXPos</span> <span class="p">=</span> <span class="p">-</span><span class="m">18f</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">DestroyHierarchy</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">DestroyHierarchy</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//Debug.Log(gameObject.transform.position.x);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">gameObject</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="n">destroyXPos</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Destroy</span><span class="p">(</span><span class="n">gameObject</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="object-properties">

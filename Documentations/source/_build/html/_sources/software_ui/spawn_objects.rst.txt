@@ -214,6 +214,29 @@ The append of child happend during the creation of each object:
 Destroy Objects
 ~~~~~~~~~~~~~~~
 
+If the object spawned hasn't been eaten, it will continue to move left-wards and stack in the spawn manager parent object, which will consume plenty of computer memory and thus harmful for the program.
+
+Therefore, all object will be destroyed if they are outside the left boundary of the screen to save the computational power.
+
+.. code-block:: C#
+
+    // DestroyObject.cs (... represents other code blocks irrelevant to the current session)
+
+    [SerializeField] private float destroyXPos = -18f;
+
+    ...
+
+    void Update() {
+        DestroyHierarchy();
+    }
+
+    public void DestroyHierarchy() {
+        //Debug.Log(gameObject.transform.position.x);
+        if (gameObject.transform.position.x < destroyXPos) {
+            Destroy(gameObject);
+        }
+    }
+
 Object Properties
 -----------------
 
