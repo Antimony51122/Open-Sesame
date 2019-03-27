@@ -306,6 +306,53 @@
 <div class="section" id="score">
 <h2>Score<a class="headerlink" href="#score" title="Permalink to this headline">¶</a></h2>
 <p>Apart from health point which is the essential factor for the player to be alive, score is another factor the player will be chasing upon.</p>
+<p>The appearance of the score uses TextMeshPro UI in the Canvas object:</p>
+<div class="align-center figure" id="id2">
+<img alt="../_images/Score_Editor.jpg" src="../_images/Score_Editor.jpg" />
+<p class="caption"><span class="caption-text">Score TextMeshPro in Editor</span></p>
+</div>
+<p>Then we manipulate it by updating <code class="docutils literal notranslate"><span class="pre">scoreText.text</span></code> in the script:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">private</span> <span class="kt">int</span> <span class="n">score</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">TextMeshProUGUI</span> <span class="n">scoreText</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">scoreText</span><span class="p">.</span><span class="n">text</span> <span class="p">=</span> <span class="n">score</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Eating fish and splash the seagull both have effect on the scoring:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
+
+<span class="c1">// ----- Eaten Behaviour -----</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">EatSmallFish</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="n">score</span> <span class="p">+=</span> <span class="m">20</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">EatBigFish</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="n">score</span> <span class="p">+=</span> <span class="m">40</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="c1">// ----- Splash SeaGull -----</span>
+
+<span class="k">public</span> <span class="k">void</span> <span class="nf">SplashSeaGull</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">score</span> <span class="p">+=</span> <span class="m">60</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The last one will be triggered when a seagull collide with the <code class="docutils literal notranslate"><span class="pre">Splash</span></code> box collider (which will be further discussed in Object Spawn Section):</p>
+<div class="align-center figure" id="id3">
+<img alt="../_images/SeaGull_Splash_Collision.jpg" src="../_images/SeaGull_Splash_Collision.jpg" />
+<p class="caption"><span class="caption-text">SeaGull &amp; Splash Box Collider Interaction Scene in Editor</span></p>
+</div>
 </div>
 </div>
 

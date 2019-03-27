@@ -163,3 +163,60 @@ Score
 -----
 
 Apart from health point which is the essential factor for the player to be alive, score is another factor the player will be chasing upon.
+
+The appearance of the score uses TextMeshPro UI in the Canvas object:
+
+.. figure:: ../_static/Software_UI/Scenes/Score_Editor.jpg
+    :align: center
+    :figclass: align-center
+
+    Score TextMeshPro in Editor
+
+Then we manipulate it by updating ``scoreText.text`` in the script:
+
+.. code-block:: C#
+
+    private int score;
+    [SerializeField] private TextMeshProUGUI scoreText;
+
+    ...
+
+    void Update() {
+        scoreText.text = score.ToString();
+
+        ...
+    }
+
+Eating fish and splash the seagull both have effect on the scoring:
+
+.. code-block:: C#
+
+    ...
+
+    // ----- Eaten Behaviour -----
+
+    public void EatSmallFish() {
+        ...
+        score += 20;
+    }
+
+    public void EatBigFish() {
+        ...
+        score += 40;
+    }
+
+    ...
+
+    // ----- Splash SeaGull -----
+
+    public void SplashSeaGull() {
+        score += 60;
+    }
+
+The last one will be triggered when a seagull collide with the ``Splash`` box collider (which will be further discussed in Object Spawn Section):
+
+.. figure:: ../_static/Software_UI/Scenes/SeaGull_Splash_Collision.jpg
+    :align: center
+    :figclass: align-center
+
+    SeaGull & Splash Box Collider Interaction Scene in Editor
