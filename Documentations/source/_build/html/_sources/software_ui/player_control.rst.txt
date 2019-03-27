@@ -14,7 +14,7 @@ For the convenience of development, the idle of the whale has been divided into 
 * the jaw part (which will rotate according to rheostat value)
 
 .. |whale_body| image:: ../_static/Software_UI/Player/Whale_no_Jaw.jpg
-   :scale: 40%
+   :scale: 50%
    :align: middle
 
 .. |jaw| image:: ../_static/Software_UI/Player/Jaw.jpg
@@ -275,6 +275,8 @@ When the button connected to Arduino has been pressed, all 3 components above wi
 Lastly, the splash can only happen when the whale is surfaced. The information whether the whale is surfaced or not can be retrieved from the ``Whale`` class:
 
 .. code-block:: C#
+
+    // SplashManager.cs (... represents other code blocks irrelevant to the current session)
 
     [SerializeField] private GameObject whaleGameObject;
     private Whale whale;
