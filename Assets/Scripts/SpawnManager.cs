@@ -31,7 +31,7 @@ public class SpawnManager : MonoBehaviour {
 
     void Start() {
         // trigger spawning new object, starting from 2s, with frequency of once each 2s
-        InvokeRepeating("spawnObject", 2.0f, spawnInterval);
+        InvokeRepeating("SpawnObject", 2.0f, spawnInterval);
     }
 
     void Update() {
@@ -54,7 +54,7 @@ public class SpawnManager : MonoBehaviour {
 
     // TODO: gradually increase the speed of object moving towards left
 
-    private void spawnObject() {
+    private void SpawnObject() {
         // instantiate the next spawn
         GameObject newSpawn;
 
@@ -74,7 +74,6 @@ public class SpawnManager : MonoBehaviour {
         } else {
             spawnPos = spawnPosHigher;
         }
-        
 
         // determine which object will be spawned at the previous defined altitude
         if (randomThresholdObject == 1) {

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Objects Spawn &amp; Their Properties &mdash; OpenSesame_Docs  documentation</title>
+  <title>Objects Spawn &amp; Properties &mdash; OpenSesame_Docs  documentation</title>
   
 
   
@@ -89,9 +89,16 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="player_control.html">Player Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="player_health.html">Player Health &amp; Score</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Objects Spawn &amp; Their Properties</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Objects Spawn &amp; Properties</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#objects-spawn">Objects Spawn</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#items-in-sea">Items in Sea</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spawning-sea-objects">Spawning Sea Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spawning-seagull">Spawning SeaGull</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constant-leftward-movement">Constant Leftward Movement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#destroy-objects">Destroy Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#object-properties">Object Properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#properties-of-objects-in-the-sea">Properties of Objects in the Sea</a></li>
 </ul>
 </li>
 </ul>
@@ -142,7 +149,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Objects Spawn &amp; Their Properties</li>
+      <li>Objects Spawn &amp; Properties</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -162,10 +169,10 @@
            <div itemprop="articleBody">
             
   <div class="figure align-center">
-<img alt="../_images/Cover1.jpg" src="../_images/Cover1.jpg" />
+<img alt="../_images/Cover2.jpg" src="../_images/Cover2.jpg" />
 </div>
-<div class="section" id="objects-spawn-their-properties">
-<h1>Objects Spawn &amp; Their Properties<a class="headerlink" href="#objects-spawn-their-properties" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="objects-spawn-properties">
+<h1>Objects Spawn &amp; Properties<a class="headerlink" href="#objects-spawn-properties" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="objects-spawn">
 <h2>Objects Spawn<a class="headerlink" href="#objects-spawn" title="Permalink to this headline">¶</a></h2>
 <p>The object spawn action has been conducted in two scripts in parallel:</p>
@@ -174,8 +181,201 @@
 <li><code class="docutils literal notranslate"><span class="pre">SpawnSeaGullManager.cs</span></code> (which only takes charge of spawning seagull)</li>
 </ul>
 <p>The two classes have no interactions and effect on each other and working simulataniously.</p>
-<div class="section" id="items-in-sea">
-<h3>Items in Sea<a class="headerlink" href="#items-in-sea" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="spawning-sea-objects">
+<h3>Spawning Sea Objects<a class="headerlink" href="#spawning-sea-objects" title="Permalink to this headline">¶</a></h3>
+<p>The spawn of the sea objects starts since 2s after the beginning of the game, every 2s, a new object will be spawned:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// trigger spawning new object, starting from 2s, with frequency of once each 2s</span>
+    <span class="n">InvokeRepeating</span><span class="p">(</span><span class="s">&quot;spawnObject&quot;</span><span class="p">,</span> <span class="m">2.0f</span><span class="p">,</span> <span class="n">spawnInterval</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">SpawnObject()</span></code> function, two random values have been generated first to determine which object to spawn and which altitute to spawn that:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">SpawnObject</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// random 1/3 possibility spawning each of the 3 plausible objects</span>
+    <span class="c1">// random 1/2 possibility spawning at each of the 2 plausible altitude</span>
+    <span class="n">Random</span> <span class="n">random</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">randomThresholdObject</span> <span class="p">=</span> <span class="n">random</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">);</span> <span class="c1">// generate a integer number between 1, 2, 3</span>
+    <span class="kt">int</span> <span class="n">randomThresholdPos</span>    <span class="p">=</span> <span class="n">random</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">3</span><span class="p">);</span> <span class="c1">// generate a integer number between 1, 2</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then an <code class="docutils literal notranslate"><span class="pre">if-else</span></code> statement will firstly determine which object to spawn under the constraint of play mode:</p>
+<ul class="simple">
+<li>Under Only “Right Leg” or “Left Leg” play mode: the object will only be spawn in the higher altitude.</li>
+<li>Under “Both Leg” mode, the object will be spawned via two lanes each of 50% chance.</li>
+</ul>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="kt">bool</span> <span class="n">isBothLegMode</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">SpawnObject</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// determine the altitude of the object spawn position, assigning values to spawnPos</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">isBothLegMode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdPos</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">spawnPos</span> <span class="p">=</span> <span class="n">spawnPosHigher</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdPos</span> <span class="p">==</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">spawnPos</span> <span class="p">=</span> <span class="n">spawnPosLower</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">spawnPos</span> <span class="p">=</span> <span class="n">spawnPosHigher</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Lastly, an “if-else” statement has been implemented to determine which object being spawned according to the sprite defined as configuration parameters above:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">GameObject</span> <span class="n">smallFish</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">GameObject</span> <span class="n">bigFish</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">GameObject</span> <span class="n">trash</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">SpawnObject</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// determine which object will be spawned at the previous defined altitude</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdObject</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newSpawn</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+            <span class="n">smallFish</span><span class="p">,</span>
+            <span class="n">spawnPos</span><span class="p">,</span>
+            <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+        <span class="p">...</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdObject</span> <span class="p">==</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newSpawn</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+            <span class="n">bigFish</span><span class="p">,</span>
+            <span class="n">spawnPos</span><span class="p">,</span>
+            <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+        <span class="p">...</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdObject</span> <span class="p">==</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newSpawn</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+            <span class="n">trash</span><span class="p">,</span>
+            <span class="n">spawnPos</span><span class="p">,</span>
+            <span class="n">Quaternion</span><span class="p">.</span><span class="n">Euler</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">20f</span><span class="p">));</span> <span class="c1">// beware the trash spawn has rotation angle</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="spawning-seagull">
+<h3>Spawning SeaGull<a class="headerlink" href="#spawning-seagull" title="Permalink to this headline">¶</a></h3>
+<p>SeaGull spawn on the other hand, is much simpler since there is only one spawn altitude and one plausible object being spawned:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnSeaGullManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// trigger spawning new object, starting from 2s, with frequency of once each 2s</span>
+    <span class="n">InvokeRepeating</span><span class="p">(</span><span class="s">&quot;SpawnSeaGull&quot;</span><span class="p">,</span> <span class="m">2.0f</span><span class="p">,</span> <span class="n">spawnSeaGullInterval</span><span class="p">);</span>
+
+    <span class="n">seaGull</span> <span class="p">=</span> <span class="n">seaGullGameObject</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SeaGull</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="c1">// sea gull is not part of the fish-trash system and the spawning rate is very low</span>
+<span class="c1">// thus doesn&#39;t need to be wrapped into the above object spawn-destroy system</span>
+<span class="k">void</span> <span class="nf">SpawnSeaGull</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">GameObject</span> <span class="n">newSpawnSeaGull</span><span class="p">;</span>
+
+    <span class="n">newSpawnSeaGull</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+        <span class="n">seaGullGameObject</span><span class="p">,</span>
+        <span class="n">spawnPosSeaGull</span><span class="p">,</span>
+        <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+    <span class="n">newSpawnSeaGull</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">transform</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="constant-leftward-movement">
+<h3>Constant Leftward Movement<a class="headerlink" href="#constant-leftward-movement" title="Permalink to this headline">¶</a></h3>
+<p>The constant leftward movement of the sea objects pursue with the following logic:</p>
+<ol class="arabic simple">
+<li>when a new object has been spawned, append it to the current spawn manager parent object</li>
+<li>in each iteration of <code class="docutils literal notranslate"><span class="pre">Update()</span></code> function being called, loop through all the current children of the parent spawn manager object in a for-loop</li>
+<li>apply a left-ward vector to every single child in the loop</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">since the child objects of spawn manager could be distroyed due being eaten by the Whale or self-destructed outside the boundary of the screen, the number of items within the spawn manager is varying thus need a agile and flexible approach on a dynamic array instance of collection of all children objects.</p>
+</div>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnSeaGullManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="p">...</span>
+
+<span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">displacement</span> <span class="p">=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="n">speed</span><span class="p">;</span>
+
+    <span class="c1">// store all children under Spawn Manager in an array</span>
+    <span class="n">Transform</span><span class="p">[]</span> <span class="n">children</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">Cast</span><span class="p">&lt;</span><span class="n">Transform</span><span class="p">&gt;().</span><span class="n">ToArray</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">children</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">child</span> <span class="p">=</span> <span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="c1">// beware to add Space.World or otherwise default will be Space.Self</span>
+        <span class="c1">// where rotation angle of the object will be stored as well</span>
+        <span class="n">child</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">Translate</span><span class="p">(</span><span class="n">Vector2</span><span class="p">.</span><span class="n">right</span> <span class="p">*</span> <span class="n">displacement</span><span class="p">,</span> <span class="n">Space</span><span class="p">.</span><span class="n">World</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The append of child happend during the creation of each object:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SpawnSeaGullManager.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">SpawnObject</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// instantiate the next spawn</span>
+    <span class="n">GameObject</span> <span class="n">newSpawn</span><span class="p">;</span>
+
+    <span class="p">...</span>
+
+    <span class="c1">// determine which object will be spawned at the previous defined altitude</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdObject</span> <span class="p">==</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newSpawn</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+            <span class="n">smallFish</span><span class="p">,</span>
+            <span class="n">spawnPos</span><span class="p">,</span>
+            <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+        <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawn</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdObject</span> <span class="p">==</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newSpawn</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+            <span class="n">bigFish</span><span class="p">,</span>
+            <span class="n">spawnPos</span><span class="p">,</span>
+            <span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+        <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawn</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">randomThresholdObject</span> <span class="p">==</span> <span class="m">3</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">newSpawn</span> <span class="p">=</span> <span class="n">Instantiate</span><span class="p">(</span>
+            <span class="n">trash</span><span class="p">,</span>
+            <span class="n">spawnPos</span><span class="p">,</span>
+            <span class="n">Quaternion</span><span class="p">.</span><span class="n">Euler</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">20f</span><span class="p">));</span> <span class="c1">// beware the trash spawn has rotation angle</span>
+        <span class="n">addChildToCurrentObject</span><span class="p">(</span><span class="n">newSpawn</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">addChildToCurrentObject</span><span class="p">(</span><span class="n">GameObject</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// make the current item a child of the SpawnManager</span>
+    <span class="n">item</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">parent</span> <span class="p">=</span> <span class="n">transform</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="destroy-objects">
+<h3>Destroy Objects<a class="headerlink" href="#destroy-objects" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="object-properties">
+<h2>Object Properties<a class="headerlink" href="#object-properties" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="properties-of-objects-in-the-sea">
+<h3>Properties of Objects in the Sea<a class="headerlink" href="#properties-of-objects-in-the-sea" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>
