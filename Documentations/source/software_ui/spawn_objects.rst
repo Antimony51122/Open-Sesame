@@ -247,7 +247,7 @@ Properties of Objects in the Sea
 
 Following the last section, the health point manipulations has been triggered in each of the object's class. The triggering ultilise ``OnTriggerEnter2D()`` function rather than ``OnCollisionEnter2D()`` because we want the object to pass through and trigger the event rather than collide and bounce away. Using small fish as an example:
 
-..code-block:: C#
+.. code-block:: C#
 
     // SmallFish.cs (... represents other code blocks irrelevant to the current session)
 
@@ -274,6 +274,8 @@ In order to increase the repetibility of the game by adding more fun factors int
    :align: top
 
 +--------------------+--------------------+--------------------+
+| Normal             | Frigtened          | Grin               |    
++--------------------+--------------------+--------------------+
 | |sfish_idol|       | |sfish_frightened| | |sfish_smile|      |
 +--------------------+--------------------+--------------------+
 
@@ -287,5 +289,95 @@ In order to increase the repetibility of the game by adding more fun factors int
    :align: top
 
 +--------------------+--------------------+--------------------+
+| Normal             | Frigtened          | Grin               |   
++--------------------+--------------------+--------------------+
 | |bfish_idol|       | |bfish_frightened| | |bfish_smile|      |
 +--------------------+--------------------+--------------------+
+
+The implementation involves basically getting the component of the sprite renderer and change the correponding sprite which has been pre-defined in the ``[SerializeField]``. The following example uses smalle fish as an example:
+
+.. code-block:: C#
+
+    // SmallFish.cs (... represents other code blocks irrelevant to the current session)
+
+    // ------------------------------------------------------
+    // Config Params
+    // ------------------------------------------------------
+
+    [SerializeField] private Sprite smallFishDefault;
+    [SerializeField] private Sprite smallFishFrightened;
+    [SerializeField] private Sprite smallFishLaugh;
+
+    ...
+
+    private void ChangeSprites() {
+        if (transform.position.x > -7f &&
+            transform.position.x < 4f) {
+            // When the fish is close to the jaw but not being eaten yet
+            GetComponent<SpriteRenderer>().sprite = smallFishFrightened;
+        } else if (transform.position.x < -7f) {
+            // When the fish passed the Whale, indicating the Whale missed capturing it
+            GetComponent<SpriteRenderer>().sprite = smallFishLaugh;
+        }
+    }
+
+Properties of the SeaGull
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The movement of the SeaGull is more complicated than the previous fishes since it involves the a dropping mechanism. This has been implemented using the manipulations of ``rigidbody`` type of the object. 
+
+* When a seagull has been spawned, the rigidbody type has been set to ``kinematic`` where there is no effect of gravity onto the object. 
+* When the seagull hit with the splash box collider, change the rigidbody type to ``dynamic`` where gravity has an effect on the object and therefore it falls into the water.
+
+.. code-block:: C#
+
+    // SeaGull.cs (... represents other code blocks irrelevant to the current session)
+
+    private Rigidbody2D rigidbody2D;
+
+    void Start() {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        ...
+    }
+
+    ...
+
+    private void ChangeRigidBodyType() {
+        // change to rigidbody type to dynamics thus could use gravity
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+When it falls into water, ignore the gravity again and apply a horizontal left-wards vector onto it for it to flow.
+
+.. code-block:: C#
+
+    // SeaGull.cs (... represents other code blocks irrelevant to the current session)
+
+    // get rid off all downwards force and make the object slowly move with water towards left
+    private void FlowWithWater() {
+        if (transform.position.y < 0.5f) {
+            rigidbody2D.gravityScale = 0;
+            rigidbody2D.velocity = new Vector3(-1.5f, 0, 0);
+        }
+    }
+
+The Sprite also changed from the normal one to a frightened one:
+
+.. |seagull_normal| image:: ../_static/Software_UI/Spawn_Objects/Seagull_1.png
+   :align: top
+
+.. |seagull_frightened| image:: ../_static/Software_UI/Spawn_Objects/Seagull_Shock.png
+   :align: top
+
++----------------------+----------------------+
+| Normal               | Frigtened            |
++----------------------+----------------------+
+| |seagull_normal|     | |seagull_frightened| |
++----------------------+----------------------+
+
+.. code-block:: C#
+
+    private void ChangeAnimation() {
+        animator.SetBool("IsHitByFlush", true);
+    }
+

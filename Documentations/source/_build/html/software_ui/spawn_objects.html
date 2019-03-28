@@ -99,6 +99,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#object-properties">Object Properties</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#properties-of-objects-in-the-sea">Properties of Objects in the Sea</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#properties-of-the-seagull">Properties of the SeaGull</a></li>
 </ul>
 </li>
 </ul>
@@ -398,15 +399,13 @@
 <h3>Properties of Objects in the Sea<a class="headerlink" href="#properties-of-objects-in-the-sea" title="Permalink to this headline">¶</a></h3>
 <p><strong>Collision Trigger</strong></p>
 <p>Following the last section, the health point manipulations has been triggered in each of the object’s class. The triggering ultilise <code class="docutils literal notranslate"><span class="pre">OnTriggerEnter2D()</span></code> function rather than <code class="docutils literal notranslate"><span class="pre">OnCollisionEnter2D()</span></code> because we want the object to pass through and trigger the event rather than collide and bounce away. Using small fish as an example:</p>
-<p>..code-block:: C#</p>
-<blockquote>
-<div><p>// SmallFish.cs (… represents other code blocks irrelevant to the current session)</p>
-<dl class="docutils">
-<dt>private void OnTriggerEnter2D(Collider2D collision) {</dt>
-<dd>playerHealth.EatSmallFish();</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SmallFish.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OnTriggerEnter2D</span><span class="p">(</span><span class="n">Collider2D</span> <span class="n">collision</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">playerHealth</span><span class="p">.</span><span class="n">EatSmallFish</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p><strong>Sprite Transition</strong></p>
 <p>In order to increase the repetibility of the game by adding more fun factors into the UI design, sprite transitions has been implemented to the two kinds of fishes:</p>
 <ul class="simple">
@@ -421,7 +420,11 @@
 <col width="33%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><img alt="sfish_idol" class="align-middle" src="../_images/smallFish_idol.png" /></td>
+<tr class="row-odd"><td>Normal</td>
+<td>Frigtened</td>
+<td>Grin</td>
+</tr>
+<tr class="row-even"><td><img alt="sfish_idol" class="align-middle" src="../_images/smallFish_idol.png" /></td>
 <td><img alt="sfish_frightened" class="align-top" src="../_images/smallFish_frightened.png" /></td>
 <td><img alt="sfish_smile" class="align-top" src="../_images/smallFish_smile.png" /></td>
 </tr>
@@ -434,12 +437,98 @@
 <col width="33%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><img alt="bfish_idol" class="align-middle" src="../_images/bigFish_idol.png" /></td>
+<tr class="row-odd"><td>Normal</td>
+<td>Frigtened</td>
+<td>Grin</td>
+</tr>
+<tr class="row-even"><td><img alt="bfish_idol" class="align-middle" src="../_images/bigFish_idol.png" /></td>
 <td><img alt="bfish_frightened" class="align-top" src="../_images/bigFish_frightened.png" /></td>
 <td><img alt="bfish_smile" class="align-top" src="../_images/bigFish_smile.png" /></td>
 </tr>
 </tbody>
 </table>
+<p>The implementation involves basically getting the component of the sprite renderer and change the correponding sprite which has been pre-defined in the <code class="docutils literal notranslate"><span class="pre">[SerializeField]</span></code>. The following example uses smalle fish as an example:</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SmallFish.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="c1">// ------------------------------------------------------</span>
+<span class="c1">// Config Params</span>
+<span class="c1">// ------------------------------------------------------</span>
+
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">Sprite</span> <span class="n">smallFishDefault</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">Sprite</span> <span class="n">smallFishFrightened</span><span class="p">;</span>
+<span class="na">[SerializeField]</span> <span class="k">private</span> <span class="n">Sprite</span> <span class="n">smallFishLaugh</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">ChangeSprites</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">&gt;</span> <span class="p">-</span><span class="m">7f</span> <span class="p">&amp;&amp;</span>
+        <span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="m">4f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// When the fish is close to the jaw but not being eaten yet</span>
+        <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SpriteRenderer</span><span class="p">&gt;().</span><span class="n">sprite</span> <span class="p">=</span> <span class="n">smallFishFrightened</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="p">-</span><span class="m">7f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// When the fish passed the Whale, indicating the Whale missed capturing it</span>
+        <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">SpriteRenderer</span><span class="p">&gt;().</span><span class="n">sprite</span> <span class="p">=</span> <span class="n">smallFishLaugh</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="properties-of-the-seagull">
+<h3>Properties of the SeaGull<a class="headerlink" href="#properties-of-the-seagull" title="Permalink to this headline">¶</a></h3>
+<p>The movement of the SeaGull is more complicated than the previous fishes since it involves the a dropping mechanism. This has been implemented using the manipulations of <code class="docutils literal notranslate"><span class="pre">rigidbody</span></code> type of the object.</p>
+<ul class="simple">
+<li>When a seagull has been spawned, the rigidbody type has been set to <code class="docutils literal notranslate"><span class="pre">kinematic</span></code> where there is no effect of gravity onto the object.</li>
+<li>When the seagull hit with the splash box collider, change the rigidbody type to <code class="docutils literal notranslate"><span class="pre">dynamic</span></code> where gravity has an effect on the object and therefore it falls into the water.</li>
+</ul>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SeaGull.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="k">private</span> <span class="n">Rigidbody2D</span> <span class="n">rigidbody2D</span><span class="p">;</span>
+
+<span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">rigidbody2D</span> <span class="p">=</span> <span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Rigidbody2D</span><span class="p">&gt;();</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">ChangeRigidBodyType</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// change to rigidbody type to dynamics thus could use gravity</span>
+    <span class="n">rigidbody2D</span><span class="p">.</span><span class="n">bodyType</span> <span class="p">=</span> <span class="n">RigidbodyType2D</span><span class="p">.</span><span class="n">Dynamic</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When it falls into water, ignore the gravity again and apply a horizontal left-wards vector onto it for it to flow.</p>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="c1">// SeaGull.cs (... represents other code blocks irrelevant to the current session)</span>
+
+<span class="c1">// get rid off all downwards force and make the object slowly move with water towards left</span>
+<span class="k">private</span> <span class="k">void</span> <span class="nf">FlowWithWater</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="p">&lt;</span> <span class="m">0.5f</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rigidbody2D</span><span class="p">.</span><span class="n">gravityScale</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="n">rigidbody2D</span><span class="p">.</span><span class="n">velocity</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector3</span><span class="p">(-</span><span class="m">1.5f</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The Sprite also changed from the normal one to a frightened one:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Normal</td>
+<td>Frigtened</td>
+</tr>
+<tr class="row-even"><td><img alt="seagull_normal" class="align-top" src="../_images/Seagull_1.png" /></td>
+<td><img alt="seagull_frightened" class="align-top" src="../_images/Seagull_Shock.png" /></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-C# notranslate"><div class="highlight"><pre><span></span><span class="k">private</span> <span class="k">void</span> <span class="nf">ChangeAnimation</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">animator</span><span class="p">.</span><span class="n">SetBool</span><span class="p">(</span><span class="s">&quot;IsHitByFlush&quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

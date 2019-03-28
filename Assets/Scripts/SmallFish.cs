@@ -43,10 +43,8 @@ public class SmallFish : MonoBehaviour {
     // TODO: not show rage faces if the whale is in different altitude
 
     private void ChangeSprites() {
-        //Debug.Log(transform.position.x);
         if (transform.position.x > -7f &&
             transform.position.x < 4f) {
-            //Debug.Log(jaw.pivotCoordinate.x);
             // When the fish is close to the jaw but not being eaten yet
             GetComponent<SpriteRenderer>().sprite = smallFishFrightened;
         } else if (transform.position.x < -7f) {
