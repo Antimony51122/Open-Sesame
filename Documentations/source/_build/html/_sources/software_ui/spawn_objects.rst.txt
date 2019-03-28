@@ -243,5 +243,49 @@ Object Properties
 Properties of Objects in the Sea
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+**Collision Trigger**
+
+Following the last section, the health point manipulations has been triggered in each of the object's class. The triggering ultilise ``OnTriggerEnter2D()`` function rather than ``OnCollisionEnter2D()`` because we want the object to pass through and trigger the event rather than collide and bounce away. Using small fish as an example:
+
+..code-block:: C#
+
+    // SmallFish.cs (... represents other code blocks irrelevant to the current session)
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        playerHealth.EatSmallFish();
+    }
 
 
+**Sprite Transition**
+
+In order to increase the repetibility of the game by adding more fun factors into the UI design, sprite transitions has been implemented to the two kinds of fishes:
+
+* When the fish the far from the whale, it shows a normal fish
+* When the fish is close to the whale but not passed yet, the fish shows a frigtened face inspired by rage faces from memes
+* When the whale miss eating a fish, the fish shows a grin face
+
+.. |sfish_idol| image:: ../_static/Software_UI/Spawn_Objects/smallFish_idol.png
+   :align: middle
+
+.. |sfish_frightened| image:: ../_static/Software_UI/Spawn_Objects/smallFish_frightened.png
+   :align: top
+
+.. |sfish_smile| image:: ../_static/Software_UI/Spawn_Objects/smallFish_smile.png
+   :align: top
+
++--------------------+--------------------+--------------------+
+| |sfish_idol|       | |sfish_frightened| | |sfish_smile|      |
++--------------------+--------------------+--------------------+
+
+.. |bfish_idol| image:: ../_static/Software_UI/Spawn_Objects/bigFish_idol.png
+   :align: middle
+
+.. |bfish_frightened| image:: ../_static/Software_UI/Spawn_Objects/bigFish_frightened.png
+   :align: top
+
+.. |bfish_smile| image:: ../_static/Software_UI/Spawn_Objects/bigFish_smile.png
+   :align: top
+
++--------------------+--------------------+--------------------+
+| |bfish_idol|       | |bfish_frightened| | |bfish_smile|      |
++--------------------+--------------------+--------------------+
