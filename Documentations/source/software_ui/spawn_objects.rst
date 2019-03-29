@@ -380,4 +380,3 @@ The Sprite also changed from the normal one to a frightened one:
     private void ChangeAnimation() {
         animator.SetBool("IsHitByFlush", true);
     }
-
