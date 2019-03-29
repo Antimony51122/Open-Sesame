@@ -44,19 +44,22 @@ The goal of his project was to create a ...
 Contents
 ========
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Mechanical
+**Mechanical**
 
 .. toctree::
    :maxdepth: 2
-   :caption: Sensor Communications
+
+**Sensor Communications**
+
+.. toctree::
+   :maxdepth: 2
 
    hardware_sensor/sensor_communication.rst
 
+**Software & UI Design**
+
 .. toctree::
    :maxdepth: 2
-   :caption: Software & UI Design
 
    software_ui/intro.rst
    software_ui/player_control.rst
