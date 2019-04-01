@@ -11,3 +11,15 @@
   <br>
   <img width="80" src="http://readthedocs.org/projects/de3-rob1-chess/badge/?version=latest" alt="Documentation Status">
 </h4>
+
+<p align="center">
+  <sub>Design Engineering, Imperial College London</sub>
+</p>
+
+<br/>
+
+<p align="center">
+  <a href="https://youtu.be/EdMYPm60peY" >
+    <img width="600" src="youtube_link.png" alt="Click to play">
+  </a>
+</h1>
