@@ -14,7 +14,9 @@ Open Sesame Documentation
 Video
 =====
 
-.. embed:: https://youtu.be/EdMYPm60peY
+`Project overview`_
+
+.. _Project overview: https://www.youtube.com/watch?v=EdMYPm60peY
 
 Dr Tomoki Arichi
 
@@ -51,22 +53,19 @@ The goal of his project was to create a ...
 Contents
 ========
 
-**Mechanical**
+.. toctree::
+   :maxdepth: 2
+   :caption: Mechanical
 
 .. toctree::
    :maxdepth: 2
-
-**Sensor Communications**
-
-.. toctree::
-   :maxdepth: 2
+   :caption: Sensor Communications
 
    hardware_sensor/sensor_communication.rst
 
-**Software & UI Design**
-
 .. toctree::
    :maxdepth: 2
+   :caption: Software & UI Design
 
    software_ui/intro.rst
    software_ui/player_control.rst
