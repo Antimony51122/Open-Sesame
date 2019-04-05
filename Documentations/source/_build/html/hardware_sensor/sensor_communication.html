@@ -174,7 +174,7 @@
 </tr>
 </tbody>
 </table>
-<p>An Arduino M0 board is used to monitor the potentiometer’s output as an analog reading in the range of <cite>0</cite> to <cite>1023</cite> from its serial ports A0 and A1, and digitise it.</p>
+<p>An Arduino M0 board is used to monitor the potentiometer’s output as an analog reading in the range of <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(1023\)</span> from its serial ports A0 and A1, and digitise it.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="100%" />
@@ -184,9 +184,81 @@
 </tr>
 </tbody>
 </table>
-<p>The potentiometer has a rotation range of <cite>270</cite> degrees, thus the potentiometer’s output signal, <cite>N</cite>, can easily be converted into an angle, θ, in degrees using Equation:</p>
+<p>The potentiometer has a rotation range of <span class="math notranslate nohighlight">\(270\)</span> degrees, thus the potentiometer’s output signal, <span class="math notranslate nohighlight">\(N\)</span>, can easily be converted into an angle, <span class="math notranslate nohighlight">\(\theta\)</span>, in degrees using Equation:</p>
 <div class="math notranslate nohighlight">
 \[\theta = \frac{270 \times N}{1023}\]</div>
+<p>The potentiometers are screwed in different orientations as the patient’s left and right leg rotate anticlockwise and clockwise, respectively. When the two legs are in their initial position (closed and centred), the potentiometer should be at its 0 position. However, since the legs do not have the limitation of the centre position, unlike the potentiometer, an offset was used to counteract this and avoid mechanical damaging. The offsets for two potentiometers were tested and calculated in Arduino to get actual leg angles, shown in the equation below, where Reference and Actual each indicates <span class="math notranslate nohighlight">\(\theta\)</span> with and without offset.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\theta_{actual \ left} = \theta_{reference \ left} - 49\\\theta_{actual \ right} = 229 - \theta_{reference \ rught}\end{aligned}\end{align} \]</div>
+<p>The game version requiring both legs:</p>
+<ul class="simple">
+<li>the movement of the right leg corresponds to the opening of the whale’s jaw (i.e. open and close)</li>
+<li>the movement of the left leg corresponds the whale’s position (i.e. up or down).</li>
+</ul>
+<p>The whale can be in either one of two positions. It will descend towards the bottom position when the angle is larger than a threshold and ascend to the top position when the angle is smaller than another threshold. The difference between the two thresholds was implemented to avoid cheating by swinging the leg across a small range. The whale’s jaw angle experiences an error that fluctuates between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(0.5\)</span> at steady state and accumulates with time. A move average filter was applied to minimise this fluctuation and avoid error accumulation. The whale’s spraying action is triggered by a button. The button is connected to the Arduino’s M0 digital input pin. The serial monitor reads a <span class="math notranslate nohighlight">\(1\)</span> when the button is pressed and a <span class="math notranslate nohighlight">\(0\)</span> when it is released. The entire electronic connections to the Arduino board presented in the M0 figure above.</p>
+<p>The full Arduino code has been appended below:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+
+<span class="cm">Reads an analog input on pin 0, converts it to angle that potentiometers screwing,</span>
+<span class="cm">and prints the result to the Serial Monitor. Graphical representation is available</span>
+<span class="cm">using Serial Plotter (Tools &gt; Serial Plotter menu). Attach the center pins of two</span>
+<span class="cm">potentiometers to pin A0 and A1, and the outside pins to +3.3V and ground.</span>
+
+<span class="cm">*/</span>
+<span class="cp">#include</span> <span class="cpf">&quot;MovingAverage.h&quot;</span><span class="cp"></span>
+<span class="c1">// This is the moving average filter from https://github.com/sofian/MovingAverage</span>
+<span class="n">MovingAverage</span> <span class="nf">average</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">buttonPin01</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">buttonPush</span><span class="p">;</span>
+
+<span class="c1">// the setup routine runs once when you press reset:</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// initialize serial communication at 9600 bits per second:</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+    <span class="c1">// initialize digital input and set it as high</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">buttonPin01</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">buttonPin01</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="c1">// the loop routine runs over and over again forever:</span>
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// when button is not pushed, buttonPush is 0</span>
+    <span class="n">buttonPush</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// reset the delta angle each loop preventing cached reference from the previous loop</span>
+    <span class="c1">// read the input on analog pin 0:</span>
+    <span class="kt">int</span> <span class="n">sensorValue_r</span> <span class="o">=</span> <span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">sensorValue_l</span> <span class="o">=</span> <span class="n">analogRead</span><span class="p">(</span><span class="n">A1</span><span class="p">);</span>
+    <span class="c1">// Convert the analog reading (which goes from 0 - 1023) to a angle (0 -</span>
+    <span class="c1">// 270 degree):</span>
+    <span class="kt">float</span> <span class="n">angle_r</span> <span class="o">=</span> <span class="n">sensorValue_r</span> <span class="o">*</span> <span class="p">(</span><span class="mi">270</span> <span class="o">/</span> <span class="mf">1023.0</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">angle_l</span> <span class="o">=</span> <span class="n">sensorValue_l</span> <span class="o">*</span> <span class="p">(</span><span class="mi">270</span> <span class="o">/</span> <span class="mf">1023.0</span><span class="p">);</span>
+    <span class="c1">// when button is pushed, the digital input change to low and buttonPush is asigned to 1</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">buttonPin01</span><span class="p">)</span> <span class="o">==</span> <span class="n">LOW</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="n">buttonPush</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// Get actual angle according to offsetvalue</span>
+    <span class="kt">float</span> <span class="n">actualAngle_r</span><span class="o">=</span><span class="n">angle_r</span><span class="o">-</span><span class="mi">49</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">actualAngle_l</span><span class="o">=</span><span class="mi">229</span><span class="o">-</span><span class="n">angle_l</span><span class="p">;</span>
+    <span class="c1">// Using filter</span>
+    <span class="kt">float</span> <span class="n">movingAvg_r</span> <span class="o">=</span> <span class="n">average</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">actualAngle_r</span><span class="p">);</span>
+    <span class="c1">// float movingAvg_l = average.update(actualAngle_l);</span>
+    <span class="n">SerialUSB</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">movingAvg_r</span><span class="p">);</span>
+    <span class="n">SerialUSB</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+    <span class="n">SerialUSB</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">actualAngle_l</span><span class="p">);</span>
+    <span class="n">SerialUSB</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+    <span class="n">SerialUSB</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buttonPush</span><span class="p">);</span>
+    <span class="n">SerialUSB</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+    <span class="n">SerialUSB</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span> <span class="c1">// for completing previous data sending</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span> <span class="c1">// in case the previous line doesn&#39;t work well</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">As you can perceive from the start, a moving average filter has been applied to the right leg angle due that, the reading from Arduino is very fluctuating, without smoothing the reading using the filter, the whale jaw might move in a creepy pattern due to the reaction to random noises. The filter has only been applied to right leg angle since the left one gives binary output, noise won’t be affecting the performance of the patient.</p>
+</div>
 </div>
 
 
