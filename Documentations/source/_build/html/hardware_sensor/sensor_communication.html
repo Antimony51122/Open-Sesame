@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -35,7 +36,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction" href="../software_ui/intro.html" />
+    <link rel="next" title="Player Control" href="../software_ui/player_control.html" />
     <link rel="prev" title="Open Sesame Documentation" href="../index.html" /> 
 </head>
 
@@ -86,7 +87,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Software &amp; UI Design</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../software_ui/intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../software_ui/player_control.html">Player Control</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../software_ui/player_health.html">Player Health &amp; Score</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../software_ui/spawn_objects.html">Objects Spawn &amp; Properties</a></li>
@@ -160,6 +160,33 @@
 </div>
 <div class="section" id="sensor-communication-tuning">
 <h1>Sensor Communication &amp; Tuning<a class="headerlink" href="#sensor-communication-tuning" title="Permalink to this headline">¶</a></h1>
+<p>For the whale’s movement in the game, three variables are acquired by the electronic system and sent in parallel at each time step. The variables are the two angles of rotation of the patient’s legs that control the position and jaw of the whale, and a binary signal that controls the whale’s water spray. Two potentiometers were used to detect the rotation of the patient’s legs.</p>
+<p>The three lugs of the potentiometer correspond, from left to right, to power input, signal output and ground, as shown below:</p>
+<p>Rotating the upper part of the potentiometer alters the resistance between the signal output and the power input as shown in the middle figure,</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><img alt="potentiometer" class="align-top" src="../_images/potentiometer.jpg" /></td>
+<td><img alt="potentiometer_lugs" class="align-top" src="../_images/potentiometer_lugs.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>An Arduino M0 board is used to monitor the potentiometer’s output as an analog reading in the range of <cite>0</cite> to <cite>1023</cite> from its serial ports A0 and A1, and digitise it.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../_images/m0.png"><img alt="m0" class="align-top" src="../_images/m0.png" style="width: 620.4px; height: 384.0px;" /></a></td>
+</tr>
+</tbody>
+</table>
+<p>The potentiometer has a rotation range of <cite>270</cite> degrees, thus the potentiometer’s output signal, <cite>N</cite>, can easily be converted into an angle, θ, in degrees using Equation:</p>
+<div class="math notranslate nohighlight">
+\[\theta = \frac{270 \times N}{1023}\]</div>
 </div>
 
 
@@ -170,7 +197,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../software_ui/intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../software_ui/player_control.html" class="btn btn-neutral float-right" title="Player Control" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../index.html" class="btn btn-neutral float-left" title="Open Sesame Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
