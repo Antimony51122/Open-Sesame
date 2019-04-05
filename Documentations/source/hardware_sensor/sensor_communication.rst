@@ -55,12 +55,10 @@ The full Arduino code has been appended below:
 .. code-block:: C++
 
     /*
-
     Reads an analog input on pin 0, converts it to angle that potentiometers screwing, 
     and prints the result to the Serial Monitor. Graphical representation is available 
     using Serial Plotter (Tools > Serial Plotter menu). Attach the center pins of two
     potentiometers to pin A0 and A1, and the outside pins to +3.3V and ground.
-
     */
     #include "MovingAverage.h"
     // This is the moving average filter from https://github.com/sofian/MovingAverage
@@ -108,7 +106,7 @@ The full Arduino code has been appended below:
         SerialUSB.print(buttonPush);
         SerialUSB.println();
         SerialUSB.flush(); // for completing previous data sending
-        delay(20); // in case the previous line doesn't work well
+        delay(20);         // in case the previous line doesn't work well
     }
 
 .. tip:: As you can perceive from the start, a moving average filter has been applied to the right leg angle due that, the reading from Arduino is very fluctuating, without smoothing the reading using the filter, the whale jaw might move in a creepy pattern due to the reaction to random noises. The filter has only been applied to right leg angle since the left one gives binary output, noise won’t be affecting the performance of the patient.

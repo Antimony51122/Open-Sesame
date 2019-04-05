@@ -198,12 +198,10 @@
 <p>The whale can be in either one of two positions. It will descend towards the bottom position when the angle is larger than a threshold and ascend to the top position when the angle is smaller than another threshold. The difference between the two thresholds was implemented to avoid cheating by swinging the leg across a small range. The whale’s jaw angle experiences an error that fluctuates between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(0.5\)</span> at steady state and accumulates with time. A move average filter was applied to minimise this fluctuation and avoid error accumulation. The whale’s spraying action is triggered by a button. The button is connected to the Arduino’s M0 digital input pin. The serial monitor reads a <span class="math notranslate nohighlight">\(1\)</span> when the button is pressed and a <span class="math notranslate nohighlight">\(0\)</span> when it is released. The entire electronic connections to the Arduino board presented in the M0 figure above.</p>
 <p>The full Arduino code has been appended below:</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
-
 <span class="cm">Reads an analog input on pin 0, converts it to angle that potentiometers screwing,</span>
 <span class="cm">and prints the result to the Serial Monitor. Graphical representation is available</span>
 <span class="cm">using Serial Plotter (Tools &gt; Serial Plotter menu). Attach the center pins of two</span>
 <span class="cm">potentiometers to pin A0 and A1, and the outside pins to +3.3V and ground.</span>
-
 <span class="cm">*/</span>
 <span class="cp">#include</span> <span class="cpf">&quot;MovingAverage.h&quot;</span><span class="cp"></span>
 <span class="c1">// This is the moving average filter from https://github.com/sofian/MovingAverage</span>
@@ -251,7 +249,7 @@
     <span class="n">SerialUSB</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buttonPush</span><span class="p">);</span>
     <span class="n">SerialUSB</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
     <span class="n">SerialUSB</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span> <span class="c1">// for completing previous data sending</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span> <span class="c1">// in case the previous line doesn&#39;t work well</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>         <span class="c1">// in case the previous line doesn&#39;t work well</span>
 <span class="p">}</span>
 </pre></div>
 </div>

@@ -44,7 +44,7 @@ With special thanks to: Dr Tomoki Arichi from King's College
 For enquiries on this documentation or source code, please contact rh3014@ic.ac.uk
 
 Background
-=======
+==========
 
 Cerebral Palsy (CP) is a very common neurological disorder, with over 3 in  2000 babies being diagnosed each year worldwide. The hip is a complex ball-and-socket joint, which primary function is to support the body's weight and to perform the movement of the upper legs. The majority of patient with CP develop spasticity. About 35% of CP patients suffer from hips displacement, which is caused by the involuntary tightening of the muscle. This places an abnormal force around the hip joint and the neighbour muscles, which could lead to the dislocation of the hip. 1 in 3 patients are affected by hip dislocation and some may need surgery, yet little effective interventions have been developed for lower limb rehabilitation despite its potential of prevention. Conventional rehabilitation of the hip requires the assistance of a specialised physiotherapist and thus is usually carried out only few times a week due to high cost and non-motivating nature of the exercises. 
 
