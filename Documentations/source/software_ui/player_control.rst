@@ -13,16 +13,16 @@ For the convenience of development, the idle of the whale has been divided into 
 * the jaw part (which will rotate according to rheostat value)
 
 .. |whale_body| image:: ../_static/Software_UI/Player/Whale_no_Jaw.jpg
-   :scale: 50%
+   :scale: 45%
    :align: middle
 
 .. |jaw| image:: ../_static/Software_UI/Player/Jaw.jpg
-   :scale: 60%
+   :scale: 50%
    :align: top
 
-+--------------+--------------+
-| |whale_body| | |jaw|        |
-+--------------+--------------+
++-----------------+--------------+
+| |whale_body|    | |jaw|        |
++-----------------+--------------+
 
 Then, open the jaw to maximum of 60 degrees and map this to the maximum angle range the patient could open his leg (if the user chose Right leg mode of both leg mode, the system map the jaw open angle onto ``angle_r`` from Arduino Serial reading and vice versa):
 

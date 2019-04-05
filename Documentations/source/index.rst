@@ -67,13 +67,10 @@ Contents
    :maxdepth: 2
    :caption: Software & UI Design
 
-   software_ui/intro.rst
    software_ui/player_control.rst
    software_ui/player_health.rst
    software_ui/spawn_objects.rst
    software_ui/environment_objects.rst
-
-
 
 Indices and tables
 ==================
