@@ -10,6 +10,7 @@
     View the Project Documentation online
   </a>
   <br/>
+  <br/>
   <a href="./BE_HCARD_OPEN-SESAME.pdf">
     View the Report in PDF format
   </a>
