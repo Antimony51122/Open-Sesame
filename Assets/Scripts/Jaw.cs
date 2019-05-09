@@ -18,8 +18,8 @@ public class Jaw : MonoBehaviour {
     [SerializeField] private float speed = 120f;
 
     // Mouth Open angleJaw Constraint
-    [SerializeField] private float closeAngle = 359f;
-    [SerializeField] private float openMaxAngle = 290f;
+    [SerializeField] private float closeAngle    = 359f;
+    [SerializeField] private float openMaxAngle  = 290f;
     [SerializeField] private float startingAngle = 358f;
 
     private float rotateAngle;
@@ -28,36 +28,34 @@ public class Jaw : MonoBehaviour {
     // Cached Reference
     // ------------------------------------------------------
 
-    [SerializeField] private GameObject arduinoGameObjectGame;
-    private ArduinoHelper arduinoHelper;
+    [SerializeField] private GameObject    arduinoGameObjectGame;
+    private                  ArduinoHelper arduinoHelper;
 
     private CalibrationMenu calibrationMenu;
 
     /////////////////
     /// Main Loop ///
     /////////////////
-
     void Awake() {
-        arduinoHelper = arduinoGameObjectGame.GetComponent<ArduinoHelper>();
+        arduinoHelper   = arduinoGameObjectGame.GetComponent<ArduinoHelper>();
         calibrationMenu = new CalibrationMenu();
     }
 
-    void Start () {
+    void Start() {
         // set the jaw initial rotation angle to 0
         rotateAngle = 0;
     }
 
-    void Update () {
+    void Update() {
         //Debug.Log(transform.position);
-        
+
         // 60 degree max in game --> map to --> user input range
         // Controlling Jaw by accessing to the right leg angle of the Serial output
         Debug.Log(calibrationMenu.angleRightConstraint);
-        
+
         if (isRightLeg) {
             angleJaw = arduinoHelper.angle_r / (calibrationMenu.angleRightConstraint / 60f);
-        }
-        else {
+        } else {
             angleJaw = arduinoHelper.angle_l / (calibrationMenu.angleRightConstraint / 60f);
         }
 
@@ -75,17 +73,17 @@ public class Jaw : MonoBehaviour {
 
     // ----- Keyboard Control -----
 
-    void KeyboardControl () {
-        if (Input.GetKey (KeyCode.A)) {
+    void KeyboardControl() {
+        if (Input.GetKey(KeyCode.A)) {
             transform.Rotate(Vector3.forward * speed * Time.deltaTime);
-        } else if (Input.GetKey (KeyCode.D)) {
+        } else if (Input.GetKey(KeyCode.D)) {
             transform.Rotate(-Vector3.forward * speed * Time.deltaTime);
         }
     }
 
     // ----- Arduino Potentiometer Control -----
 
-    void PotentiometerControl (float angle) {
+    void PotentiometerControl(float angle) {
         transform.localRotation = Quaternion.Euler(0, 0, -angle);
     }
 }
